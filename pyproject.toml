@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "legislation-discord-bot"
+version = "0.1.0"
+description = ""
+authors = ["Jennifer Wilcox <jennifer@nitori.org>"]
+readme = "README.md"
+
+[tool.poetry.scripts]
+legibot = "legislation_discord_bot.main:main"
+legibot-dump = "legislation_discord_bot.bills:dump_all"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+aiohttp = "^3.9.1"
+discord-py = "^2.3.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
