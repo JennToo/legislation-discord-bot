@@ -80,16 +80,20 @@ def maybe_render_changed_bill(old_bill, new_bill):
 
     return found_change, "\n".join(message)
 
+
 def render_all_bills(old_bills, new_bills):
     result = []
     for bill_number in new_bills:
         if bill_number not in old_bills:
             result.append(render_new_bill(new_bills[bill_number]))
         else:
-            changed, rendering = maybe_render_changed_bill(old_bills[bill_number], new_bills[bill_number])
+            changed, rendering = maybe_render_changed_bill(
+                old_bills[bill_number], new_bills[bill_number]
+            )
             if changed:
                 result.append(rendering)
     return result
+
 
 def load_bill_database():
     return json.loads(BILL_DATABASE_FILE.read_text())

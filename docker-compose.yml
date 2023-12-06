@@ -1,0 +1,12 @@
+version: '3.5'
+services:
+  legibot:
+    image: legislation-discord-bot:local
+    container_name: legibot
+    user: 1000:1000
+    volumes:
+      - /home/jwilcox/repo/legislation-discord-bot:/workdir
+    restart: 'unless-stopped'
+    working_dir: /workdir
+    env_file: .env
+    init: true

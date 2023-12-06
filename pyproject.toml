@@ -13,6 +13,7 @@ legibot-dump = "legislation_discord_bot.bills:dump_all"
 python = "^3.10"
 aiohttp = "^3.9.1"
 discord-py = "^2.3.2"
+aiojobs = "^1.2.1"
 
 [build-system]
 requires = ["poetry-core"]

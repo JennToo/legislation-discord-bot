@@ -1,0 +1,6 @@
+#!/bin/bash
+
+set -eux
+
+poetry build
+docker build . -t legislation-discord-bot:local
