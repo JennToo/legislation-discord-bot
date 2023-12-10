@@ -32,7 +32,10 @@ class Client(discord.Client):
 
 async def check_forever(client):
     while True:
-        await check_for_updates(client)
+        try:
+            await check_for_updates(client)
+        except Exception:
+            logging.exception("Ignoring exception")
         await asyncio.sleep(FULL_SCAN_INTERVAL)
 
 
