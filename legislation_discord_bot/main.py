@@ -11,6 +11,7 @@ from . import bills
 ALLOWED_CHANNELS = [
     # 535528612502437889,  # Testing channel
     1181424039756050514,  # Trans North AL channel
+    1193332824846127275,  # readfree
 ]
 MESSAGE_SEND_COOLDOWN = 15
 FULL_SCAN_INTERVAL = 15 * 60
