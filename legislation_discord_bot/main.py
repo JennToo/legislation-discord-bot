@@ -45,6 +45,9 @@ async def check_for_updates(client):
     async with aiohttp.ClientSession() as session:
         old_bills = bills.load_bill_database()
         new_bills = await bills.get_bills(session)
+        if len(new_bills) < (len(old_bills) / 2):
+            logger.info("Sanity check failure. Weird change, ignoring %s", new_bills)
+            return
         for message in bills.render_all_bills(old_bills, new_bills):
             logger.info("New message: %s", message)
             for channel_id in ALLOWED_CHANNELS:
