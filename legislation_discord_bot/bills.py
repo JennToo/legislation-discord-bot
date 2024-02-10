@@ -9,6 +9,7 @@ SESSION_TYPE = "2024 Regular Session"
 INTRODUCED_BILL_LINK_TEMPLATE = (
     "https://www.legislature.state.al.us/pdf/SearchableInstruments/2024RS/{}-int.pdf"
 )
+CONFIG = json.loads(pathlib.Path("./config.json").read_text())
 
 
 async def get_bills(session):
@@ -66,8 +67,11 @@ def render_new_bill(bill):
 
 
 def maybe_render_changed_bill(old_bill, new_bill):
-    message = ["# Changed Bill"]
-    message.append(f" - **Bill**: {old_bill['InstrumentNbr']}")
+    message = ["## Changed Bill"]
+    bill_number = old_bill['InstrumentNbr']
+    if bill_number in CONFIG["bills-of-interest"]:
+        message = ["# \u26a0 Changed Bill of Interest \u26a0"]
+    message.append(f" - **Bill**: {bill_number} - {new_bill['ShortTitle']}")
 
     found_change = False
     for field, display_name in RELEVEANT_FIELDS.items():
