@@ -62,6 +62,27 @@
         "SessionType": "2024 Regular Session",
         "SessionYear": "2024"
     },
+    "SB129": {
+        "EventDt": "2024-02-21",
+        "EventTm": "11:00 AM",
+        "Location": "Finance and Taxation",
+        "EventTitle": "County and Municipal Government standing meeting",
+        "EventDesc": "",
+        "Body": "Senate",
+        "DeadlineDt": "",
+        "PublicHearing": "Y",
+        "LiveStream": null,
+        "Committee": "County and Municipal Government",
+        "AgendaUrl": "",
+        "SortTime": "2024-02-21 11:00:00\r",
+        "OidMeeting": "833",
+        "Sponsor": "Barfoot",
+        "InstrumentNbr": "SB129",
+        "ShortTitle": "Diversity, equity, and inclusion; certain public entities prohibited from maintaining office that promotes diversity, equity, and inclusion programs; certain programs related to divisive concepts or diversity, equity, and inclusion, prohibited; promotion and endorsement of certain divisive concepts in certain public settings prohibited; exceptions provided; public institution of higher education, required to designate multioccupancy restrooms based on biological sex",
+        "OidInstrument": "3943",
+        "SessionType": "2024 Regular Session",
+        "SessionYear": "2024"
+    },
     "SB92": {
         "EventDt": "2024-02-20",
         "EventTm": "1:00 PM",
