@@ -104,6 +104,27 @@
         "SessionType": "2024 Regular Session",
         "SessionYear": "2024"
     },
+    "HB130": {
+        "EventDt": "2024-03-06",
+        "EventTm": "1:30 PM",
+        "Location": "Room 206",
+        "EventTitle": "Education Policy standing meeting",
+        "EventDesc": "",
+        "Body": "House",
+        "DeadlineDt": "",
+        "PublicHearing": "Y",
+        "LiveStream": null,
+        "Committee": "Education Policy",
+        "AgendaUrl": "",
+        "SortTime": "2024-03-06 13:30:00\r",
+        "OidMeeting": "907",
+        "Sponsor": "Butler",
+        "InstrumentNbr": "HB130",
+        "ShortTitle": "Education, instruction about gender identity and sexual orientation in public K-12 schools, prohibited",
+        "OidInstrument": "3497",
+        "SessionType": "2024 Regular Session",
+        "SessionYear": "2024"
+    },
     "SB92": {
         "EventDt": "2024-02-20",
         "EventTm": "1:00 PM",
