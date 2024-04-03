@@ -166,5 +166,26 @@
         "OidInstrument": "3414",
         "SessionType": "2024 Regular Session",
         "SessionYear": "2024"
+    },
+    "HB385": {
+        "EventDt": "2024-04-03",
+        "EventTm": "3:00 PM",
+        "Location": "Room 206",
+        "EventTitle": "State Government standing meeting",
+        "EventDesc": "",
+        "Body": "House",
+        "DeadlineDt": "",
+        "PublicHearing": "",
+        "LiveStream": null,
+        "Committee": "State Government",
+        "AgendaUrl": "",
+        "SortTime": "2024-04-03 15:00:00\r",
+        "OidMeeting": "967",
+        "Sponsor": "Mooney",
+        "InstrumentNbr": "HB385",
+        "ShortTitle": "Crimes and offenses, provided that the use of any premises to distribute material that is harmful to minors is a public nuisance and further provided for the definition of \"sexual conduct\"",
+        "OidInstrument": "4867",
+        "SessionType": "2024 Regular Session",
+        "SessionYear": "2024"
     }
 }
