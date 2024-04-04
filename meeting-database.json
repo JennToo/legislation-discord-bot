@@ -175,7 +175,7 @@
         "EventDesc": "",
         "Body": "House",
         "DeadlineDt": "",
-        "PublicHearing": "",
+        "PublicHearing": "Y",
         "LiveStream": null,
         "Committee": "State Government",
         "AgendaUrl": "",
