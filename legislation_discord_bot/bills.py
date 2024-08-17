@@ -1,31 +1,24 @@
 import asyncio
 import pathlib
 import json
+import logging
 
 import aiohttp
 
-SESSION_YEAR = "2024"
-SESSION_TYPE = "2024 Regular Session"
+SESSION_YEAR = "2025"
+SESSION_TYPE = "2025 Regular Session"
 INTRODUCED_BILL_LINK_TEMPLATE = (
-    "https://www.legislature.state.al.us/pdf/SearchableInstruments/2024RS/{}-int.pdf"
+    "https://www.legislature.state.al.us/pdf/SearchableInstruments/2025RS/{}-int.pdf"
 )
 CONFIG = json.loads(pathlib.Path("./config.json").read_text())
 
 
 async def graphql(session, query):
     async with session.post(
-        "https://gql.api.alison.legislature.state.al.us/graphql",
+        "https://alison.legislature.state.al.us/graphql",
         json={
             "query": query,
-            "operationName": "",
             "variables": [],
-        },
-        headers={
-            "Authorization": "Bearer undefined",
-            "Content-Type": "application/json",
-            "Accept": "*/*",
-            "Origin": "https://alison.legislature.state.al.us",
-            "Referer": "https://alison.legislature.state.al.us/",
         },
     ) as result:
         result.raise_for_status()
@@ -194,7 +187,7 @@ def dump_all():
 
 BILL_DATABASE_FILE = pathlib.Path("bill-database.json")
 MEETING_DATABASE_FILE = pathlib.Path("meeting-database.json")
-PAGE_SIZE = 25
+PAGE_SIZE = 15
 SCRAPE_PAGE_INTERVAL = 5
 RELEVANT_BILL_FIELDS = {
     "InstrumentNbr": "Bill",
@@ -218,5 +211,5 @@ RELEVANT_MEETING_FIELDS = {
     "EventDt": "Date",
     "EventTm": "Time",
 }
-RAW_QUERY = '{allInstrumentOverviews(instrumentType:"B", instrumentNbr:"", body:"", sessionYear:"SESSION_YEAR", sessionType:"SESSION_TYPE", assignedCommittee:"", status:"", currentStatus:"", subject:"", instrumentSponsor:"", companionInstrumentNbr:"", effectiveDateCertain:"", effectiveDateOther:"", firstReadSecondBody:"", secondReadSecondBody:"", direction:"ASC"orderBy:"InstrumentNbr"limit:"PAGE_SIZE"offset:"OFFSET"  search:"" customFilters: {}companionReport:"", ){ ID,SessionYear,InstrumentNbr,InstrumentSponsor,SessionType,Body,Subject,ShortTitle,AssignedCommittee,PrefiledDate,FirstRead,CurrentStatus,LastAction,ActSummary,ViewEnacted,CompanionInstrumentNbr,EffectiveDateCertain,EffectiveDateOther,InstrumentType }}'
+RAW_QUERY = """{allInstrumentOverviews(instrumentType:"B", instrumentNbr:"", body:"", sessionYear:"2025", sessionType:"2025 Regular Session", assignedCommittee:"", status:"", currentStatus:"", subject:"", instrumentSponsor:"", companionInstrumentNbr:"", effectiveDateCertain:"", effectiveDateOther:"", firstReadSecondBody:"", secondReadSecondBody:"", direction:"ASC"orderBy:"InstrumentNbr"limit:PAGE_SIZE offset:OFFSET  search:"" customFilters: {}companionReport:"", ){ ID,SessionYear,InstrumentNbr,InstrumentSponsor,SessionType,Body,Subject,ShortTitle,AssignedCommittee,PrefiledDate,FirstRead,CurrentStatus,LastAction,ActSummary,ViewEnacted,CompanionInstrumentNbr,EffectiveDateCertain,EffectiveDateOther,InstrumentType }}"""
 RAW_QUERY_MEETING = '{hearingsMeetingsDetails(eventType:"meeting", body:"", keyword:"", toDate:"3000-02-10", fromDate:"2024-02-10", sortTime:"", direction:"ASC", orderBy:"SortTime", ){EventDt,EventTm,Location,EventTitle,EventDesc,Body,DeadlineDt,PublicHearing,LiveStream,Committee,AgendaUrl,SortTime,OidMeeting, Sponsor, InstrumentNbr, ShortTitle, OidInstrument, SessionType, SessionYear}}'
