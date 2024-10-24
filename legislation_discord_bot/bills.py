@@ -2,6 +2,7 @@ import asyncio
 import pathlib
 import json
 import logging
+from copy import deepcopy
 
 import aiohttp
 
@@ -16,10 +17,7 @@ CONFIG = json.loads(pathlib.Path("./config.json").read_text())
 async def graphql(session, query):
     async with session.post(
         "https://alison.legislature.state.al.us/graphql",
-        json={
-            "query": query,
-            "variables": [],
-        },
+        json=query,
     ) as result:
         result.raise_for_status()
         result_json = await result.json()
@@ -27,12 +25,13 @@ async def graphql(session, query):
 
 
 async def get_meetings_by_bill(session):
-    result_json = await graphql(session, RAW_QUERY_MEETING)
+    result_json = await graphql(session, BASE_QUERY_MEETING)
 
     meetings = {}
-    for meeting_detail in result_json["data"]["hearingsMeetingsDetails"]:
-        if meeting_detail["InstrumentNbr"] in CONFIG["bills-of-interest"]:
-            meetings[meeting_detail["InstrumentNbr"]] = meeting_detail
+    for meeting_detail in result_json["data"]["meetings"]["data"]:
+        for agenda_item in meeting_detail["agendaItems"]:
+            if agenda_item in CONFIG["bills-of-interest"]:
+                meetings[agenda_item] = meeting_detail
     return meetings
 
 
@@ -40,23 +39,18 @@ async def get_bills(session):
     bills = {}
     offset = 0
     while True:
-        query = RAW_QUERY
-        for key, value in {
-            "PAGE_SIZE": str(PAGE_SIZE),
-            "OFFSET": str(offset),
-            "SESSION_TYPE": SESSION_TYPE,
-            "SESSION_YEAR": SESSION_YEAR,
-        }.items():
-            query = query.replace(key, value)
+        query = deepcopy(BASE_QUERY)
+        query["variables"]["limit"] = PAGE_SIZE
+        query["variables"]["offset"] = offset
 
         result_json = await graphql(session, query)
 
-        for bill in result_json["data"]["allInstrumentOverviews"]:
+        for bill in result_json["data"]["data"]:
             bills[bill["InstrumentNbr"]] = bill
 
-        if len(result_json["data"]["allInstrumentOverviews"]) < PAGE_SIZE:
+        if len(result_json["data"]["data"]) < PAGE_SIZE:
             break
-        offset += PAGE_SIZE
+        offset += len(result_json["data"]["data"])
         await asyncio.sleep(SCRAPE_PAGE_INTERVAL)
 
     return bills
@@ -187,7 +181,7 @@ def dump_all():
 
 BILL_DATABASE_FILE = pathlib.Path("bill-database.json")
 MEETING_DATABASE_FILE = pathlib.Path("meeting-database.json")
-PAGE_SIZE = 15
+PAGE_SIZE = 2000
 SCRAPE_PAGE_INTERVAL = 5
 RELEVANT_BILL_FIELDS = {
     "InstrumentNbr": "Bill",
@@ -211,5 +205,24 @@ RELEVANT_MEETING_FIELDS = {
     "EventDt": "Date",
     "EventTm": "Time",
 }
-RAW_QUERY = """{allInstrumentOverviews(instrumentType:"B", instrumentNbr:"", body:"", sessionYear:"2025", sessionType:"2025 Regular Session", assignedCommittee:"", status:"", currentStatus:"", subject:"", instrumentSponsor:"", companionInstrumentNbr:"", effectiveDateCertain:"", effectiveDateOther:"", firstReadSecondBody:"", secondReadSecondBody:"", direction:"ASC"orderBy:"InstrumentNbr"limit:PAGE_SIZE offset:OFFSET  search:"" customFilters: {}companionReport:"", ){ ID,SessionYear,InstrumentNbr,InstrumentSponsor,SessionType,Body,Subject,ShortTitle,AssignedCommittee,PrefiledDate,FirstRead,CurrentStatus,LastAction,ActSummary,ViewEnacted,CompanionInstrumentNbr,EffectiveDateCertain,EffectiveDateOther,InstrumentType }}"""
-RAW_QUERY_MEETING = '{hearingsMeetingsDetails(eventType:"meeting", body:"", keyword:"", toDate:"3000-02-10", fromDate:"2025-01-01", sortTime:"", direction:"ASC", orderBy:"SortTime", ){EventDt,EventTm,Location,EventTitle,EventDesc,Body,DeadlineDt,PublicHearing,LiveStream,Committee,AgendaUrl,SortTime,OidMeeting, Sponsor, InstrumentNbr, ShortTitle, OidInstrument, SessionType, SessionYear}}'
+BASE_QUERY = {
+    "operationName": "bills",
+    "query": "query bills($googleId: String, $category: String, $sessionYear: String, $sessionType: String, $direction: String, $orderBy: String, $offset: Int, $limit: Int, $filters: InstrumentOverviewInput! = {}, $search: String, $instrumentType: String) {\n  data: allInstrumentOverviews(\n    googleId: $googleId\n    category: $category\n    instrumentType: $instrumentType\n    sessionYear: $sessionYear\n    sessionType: $sessionType\n    direction: $direction\n    orderBy: $orderBy\n    limit: $limit\n    offset: $offset\n    customFilters: $filters\n    search: $search\n  ) {\n    ...billModalDataFragment\n    ID\n    SessionYear\n    InstrumentNbr\n    InstrumentSponsor\n    SessionType\n    Body\n    Subject\n    ShortTitle\n    AssignedCommittee\n    PrefiledDate\n    FirstRead\n    CurrentStatus\n    LastAction\n    ActSummary\n    ViewEnacted\n    CompanionInstrumentNbr\n    EffectiveDateCertain\n    EffectiveDateOther\n    InstrumentType\n    __typename\n  }\n  count: allInstrumentOverviewsCount(\n    googleId: $googleId\n    category: $category\n    instrumentType: $instrumentType\n    sessionYear: $sessionYear\n    sessionType: $sessionType\n    customFilters: $filters\n    search: $search\n  )\n}\nfragment billModalDataFragment on InstrumentOverviews {\n  ID\n  InstrumentType\n  SessionType\n  SessionYear\n  InstrumentNbr\n  ActSummary\n  __typename\n}",
+    "variables": {
+        "direction": "DESC",
+        "filters": {},
+        "instrumentType": "B",
+        "limit": 15,
+        "offset": 0,
+        "orderBy": "SessionYear",
+        "sessionType": "2025 Regular Session",
+    },
+}
+BASE_QUERY_MEETING = {
+    "operationName": "meetings",
+    "query": "query meetings($body: OrganizationBody, $managedInLinx: Boolean, $autoScroll: Boolean!) {\n  meetings(\n    where: {body: {eq: $body}, startDate: {gteToday: true}, managedInLinx: {eq: $managedInLinx}}\n  ) {\n    data {\n      id\n      startDate\n      startTime\n      location\n      title\n      description\n      body\n      hasPublicHearing\n      hasLiveStream\n      committee\n      agendaUrl\n      agendaItems @skip(if: $autoScroll) {\n        id\n        sessionType\n        sessionYear\n        instrumentNumber\n        shortTitle\n        matter\n        recommendation\n        hasPublicHearing\n        sponsor\n        __typename\n      }\n      __typename\n    }\n    count\n    __typename\n  }\n}",
+    "variables": {"autoScroll": False},
+}
+
+if __name__ == "__main__":
+    dump_all()
