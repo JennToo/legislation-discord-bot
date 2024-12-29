@@ -45,22 +45,22 @@ async def get_bills(session):
 
         result_json = await graphql(session, query)
 
-        for bill in result_json["data"]["data"]:
-            bills[bill["InstrumentNbr"]] = bill
+        for bill in result_json["data"]["instrumentOverviews"]["data"]:
+            bills[bill["instrumentNbr"]] = bill
 
-        if len(result_json["data"]["data"]) < PAGE_SIZE:
+        if len(result_json["data"]["instrumentOverviews"]["data"]) < PAGE_SIZE:
             break
-        offset += len(result_json["data"]["data"])
+        offset += len(result_json["data"]["instrumentOverviews"]["data"])
         await asyncio.sleep(SCRAPE_PAGE_INTERVAL)
 
     return bills
 
 
 def render_new_bill(bill):
-    message = render_new_obj(bill, "Bill", RELEVANT_BILL_FIELDS, bill["InstrumentNbr"])
+    message = render_new_obj(bill, "Bill", RELEVANT_BILL_FIELDS, bill["instrumentNbr"])
     message.append(
         "[Link to initial Bill Text]("
-        + INTRODUCED_BILL_LINK_TEMPLATE.format(bill["InstrumentNbr"])
+        + INTRODUCED_BILL_LINK_TEMPLATE.format(bill["instrumentNbr"])
         + ") (Note: Bill text may take some time before available)"
     )
     return "\n".join(message)
@@ -84,7 +84,7 @@ def render_new_obj(obj, name, fields, id_):
 
 def maybe_render_changed_bill(old_bill, new_bill):
     return maybe_render_changed_obj(
-        old_bill, new_bill, "Bill", RELEVANT_BILL_FIELDS, old_bill["InstrumentNbr"]
+        old_bill, new_bill, "Bill", RELEVANT_BILL_FIELDS, old_bill["instrumentNbr"]
     )
 
 
@@ -94,7 +94,7 @@ def maybe_render_changed_meeting(old_meeting, new_meeting):
         new_meeting,
         "Meeting",
         RELEVANT_MEETING_FIELDS,
-        old_meeting["InstrumentNbr"],
+        old_meeting["instrumentNbr"],
     )
 
 
@@ -102,7 +102,7 @@ def maybe_render_changed_obj(old_obj, new_obj, name, fields, id_):
     message = [f"## Changed {name}"]
     if id_ in CONFIG["bills-of-interest"]:
         message = [f"# \u26a0 Changed {name} of Interest \u26a0"]
-    message.append(f" - **Bill**: {id_} - {new_obj.get('ShortTitle')}")
+    message.append(f" - **Bill**: {id_} - {new_obj.get('shortTitle')}")
 
     found_change = False
     for field, display_name in fields.items():
@@ -184,38 +184,85 @@ MEETING_DATABASE_FILE = pathlib.Path("meeting-database.json")
 PAGE_SIZE = 2000
 SCRAPE_PAGE_INTERVAL = 5
 RELEVANT_BILL_FIELDS = {
-    "InstrumentNbr": "Bill",
-    "InstrumentSponsor": "Sponsor",
-    "AssignedCommittee": "Committee",
-    "PrefiledDate": "Prefiled Date",
-    "FirstRead": "First Read",
-    "CurrentStatus": "Status",
-    "Subject": "Subject",
-    "ShortTitle": "Title",
+    "instrumentNbr": "Bill",
+    "instrumentSponsor": "Sponsor",
+    "assignedCommittee": "Committee",
+    "prefiledDate": "Prefiled Date",
+    "firstRead": "First Read",
+    "currentStatus": "Status",
+    "subject": "Subject",
+    "shortTitle": "Title",
 }
 RELEVANT_MEETING_FIELDS = {
-    "InstrumentNbr": "Bill",
-    "ShortTitle": "Title",
-    "Sponsor": "Sponsor",
-    "Committee": "Committee",
-    "Body": "Body",
-    "PublicHearing": "Public Hearing Requested",
-    "EventTitle": "Meeting",
-    "Location": "Location",
-    "EventDt": "Date",
-    "EventTm": "Time",
+    "instrumentNbr": "Bill",
+    "shortTitle": "Title",
+    "sponsor": "Sponsor",
+    "committee": "Committee",
+    "body": "Body",
+    "publicHearing": "Public Hearing Requested",
+    "eventTitle": "Meeting",
+    "location": "Location",
+    "eventDt": "Date",
+    "eventTm": "Time",
 }
 BASE_QUERY = {
     "operationName": "bills",
-    "query": "query bills($googleId: String, $category: String, $sessionYear: String, $sessionType: String, $direction: String, $orderBy: String, $offset: Int, $limit: Int, $filters: InstrumentOverviewInput! = {}, $search: String, $instrumentType: String) {\n  data: allInstrumentOverviews(\n    googleId: $googleId\n    category: $category\n    instrumentType: $instrumentType\n    sessionYear: $sessionYear\n    sessionType: $sessionType\n    direction: $direction\n    orderBy: $orderBy\n    limit: $limit\n    offset: $offset\n    customFilters: $filters\n    search: $search\n  ) {\n    ...billModalDataFragment\n    ID\n    SessionYear\n    InstrumentNbr\n    InstrumentSponsor\n    SessionType\n    Body\n    Subject\n    ShortTitle\n    AssignedCommittee\n    PrefiledDate\n    FirstRead\n    CurrentStatus\n    LastAction\n    ActSummary\n    ViewEnacted\n    CompanionInstrumentNbr\n    EffectiveDateCertain\n    EffectiveDateOther\n    InstrumentType\n    __typename\n  }\n  count: allInstrumentOverviewsCount(\n    googleId: $googleId\n    category: $category\n    instrumentType: $instrumentType\n    sessionYear: $sessionYear\n    sessionType: $sessionType\n    customFilters: $filters\n    search: $search\n  )\n}\nfragment billModalDataFragment on InstrumentOverviews {\n  ID\n  InstrumentType\n  SessionType\n  SessionYear\n  InstrumentNbr\n  ActSummary\n  __typename\n}",
+    "query": """query bills($googleId: ID, $category: String, $instrumentType: InstrumentType, $sessionYear: Int, $sessionType: String, $order: Order = [
+"sessionYear", 
+"DESC"], $offset: Int, $limit: Int, $where: InstrumentOverviewWhere! = {}, $search: String) {
+  instrumentOverviews(
+    googleId: $googleId
+    category: $category
+    where: [{instrumentType: {eq: $instrumentType}, sessionYear: {eq: $sessionYear}, sessionType: {eq: $sessionType}}, $where]
+    order: $order
+    limit: $limit
+    offset: $offset
+    search: $search
+  ) {
+    data {
+      ...billModalDataFragment
+      id
+      sessionYear
+      instrumentNbr
+      instrumentSponsor
+      sessionType
+      body
+      subject
+      shortTitle
+      assignedCommittee
+      prefiledDate
+      firstRead
+      currentStatus
+      lastAction
+      actSummary
+      viewEnacted
+      companionInstrumentNbr
+      effectiveDateCertain
+      effectiveDateOther
+      instrumentType
+      __typename
+    }
+    count
+    __typename
+  }
+}
+fragment billModalDataFragment on InstrumentOverview {
+  id
+  instrumentType
+  sessionType
+  sessionYear
+  instrumentNbr
+  actSummary
+  effectiveDateCertain
+  effectiveDateOther
+  __typename
+}""",
     "variables": {
-        "direction": "DESC",
-        "filters": {},
         "instrumentType": "B",
         "limit": 15,
         "offset": 0,
-        "orderBy": "SessionYear",
         "sessionType": "2025 Regular Session",
+        "where": {},
     },
 }
 BASE_QUERY_MEETING = {
