@@ -1,4 +1,26 @@
 {
+    "HB69": {
+        "ID": "3614358",
+        "InstrumentType": "B",
+        "SessionType": "2025 Regular Session",
+        "SessionYear": "2025",
+        "InstrumentNbr": "HB69",
+        "ActSummary": "",
+        "__typename": "InstrumentOverviews",
+        "InstrumentSponsor": "Juandalynn Givan",
+        "Body": "House",
+        "Subject": "Firearms",
+        "ShortTitle": "Firearms; Class 1 municipalities; possession of certain firearms prohibited under federal law; possession of firearms by prohibited person under federal law, penalty provided",
+        "AssignedCommittee": "Judiciary (House)",
+        "PrefiledDate": "12/04/2024",
+        "FirstRead": "12/04/2024",
+        "CurrentStatus": "Pending Committee Action in House of Origin",
+        "LastAction": "Pending Committee Action in House of Origin",
+        "ViewEnacted": "",
+        "CompanionInstrumentNbr": "",
+        "EffectiveDateCertain": "",
+        "EffectiveDateOther": ""
+    },
     "HB72": {
         "ID": "3614356",
         "InstrumentType": "B",
