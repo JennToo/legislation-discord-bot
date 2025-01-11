@@ -28,8 +28,9 @@ class Client(discord.Client):
         self.scheduler = None
 
     async def on_ready(self):
-        self.scheduler = aiojobs.Scheduler()
-        await self.scheduler.spawn(check_forever(self))
+        if self.scheduler is None:
+            self.scheduler = aiojobs.Scheduler()
+            await self.scheduler.spawn(check_forever(self))
 
 
 async def check_forever(client):
