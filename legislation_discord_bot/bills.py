@@ -11,7 +11,7 @@ SESSION_TYPE = "2025 Regular Session"
 INTRODUCED_BILL_LINK_TEMPLATE = (
     "https://www.legislature.state.al.us/pdf/SearchableInstruments/2025RS/{}-int.pdf"
 )
-CONFIG = json.loads(pathlib.Path("./config.json").read_text())
+CONFIG = pathlib.Path("./config.json")
 
 
 async def graphql(session, query):
@@ -24,13 +24,13 @@ async def graphql(session, query):
     return result_json
 
 
-async def get_meetings_by_bill(session):
+async def get_meetings_by_bill(session, config):
     result_json = await graphql(session, BASE_QUERY_MEETING)
 
     meetings = {}
     for meeting_detail in result_json["data"]["meetings"]["data"]:
         for agenda_item in meeting_detail["agendaItems"]:
-            if agenda_item in CONFIG["bills-of-interest"]:
+            if agenda_item in config["bills-of-interest"]:
                 meetings[agenda_item] = meeting_detail
     return meetings
 
@@ -59,8 +59,10 @@ async def get_bills(session):
     return bills
 
 
-def render_new_bill(bill):
-    message = render_new_obj(bill, "Bill", RELEVANT_BILL_FIELDS, bill["instrumentNbr"])
+def render_new_bill(bill, config):
+    message = render_new_obj(
+        bill, "Bill", RELEVANT_BILL_FIELDS, bill["instrumentNbr"], config
+    )
     message.append(
         "[Link to initial Bill Text]("
         + INTRODUCED_BILL_LINK_TEMPLATE.format(bill["instrumentNbr"])
@@ -69,41 +71,47 @@ def render_new_bill(bill):
     return "\n".join(message)
 
 
-def render_new_meeting(meeting):
+def render_new_meeting(meeting, config):
     message = render_new_obj(
-        meeting, "Meeting", RELEVANT_MEETING_FIELDS, meeting["InstrumentNbr"]
+        meeting, "Meeting", RELEVANT_MEETING_FIELDS, meeting["InstrumentNbr"], config
     )
     return "\n".join(message)
 
 
-def render_new_obj(obj, name, fields, id_):
+def render_new_obj(obj, name, fields, id_, config):
     message = [f"# New {name}"]
-    if id_ in CONFIG["bills-of-interest"]:
+    if id_ in config["bills-of-interest"]:
         message = [f"# \u26a0 New {name} for Bill of Interest \u26a0"]
     for field, display_name in fields.items():
         message.append(f" - **{display_name}**: {obj.get(field, 'UNKNOWN')}")
     return message
 
 
-def maybe_render_changed_bill(old_bill, new_bill):
+def maybe_render_changed_bill(old_bill, new_bill, config):
     return maybe_render_changed_obj(
-        old_bill, new_bill, "Bill", RELEVANT_BILL_FIELDS, old_bill["instrumentNbr"]
+        old_bill,
+        new_bill,
+        "Bill",
+        RELEVANT_BILL_FIELDS,
+        old_bill["instrumentNbr"],
+        config,
     )
 
 
-def maybe_render_changed_meeting(old_meeting, new_meeting):
+def maybe_render_changed_meeting(old_meeting, new_meeting, config):
     return maybe_render_changed_obj(
         old_meeting,
         new_meeting,
         "Meeting",
         RELEVANT_MEETING_FIELDS,
         old_meeting["instrumentNbr"],
+        config,
     )
 
 
-def maybe_render_changed_obj(old_obj, new_obj, name, fields, id_):
+def maybe_render_changed_obj(old_obj, new_obj, name, fields, id_, config):
     message = [f"## Changed {name}"]
-    if id_ in CONFIG["bills-of-interest"]:
+    if id_ in config["bills-of-interest"]:
         message = [f"# \u26a0 Changed {name} of Interest \u26a0"]
     message.append(f" - **Bill**: {id_} - {new_obj.get('shortTitle')}")
 
@@ -119,37 +127,37 @@ def maybe_render_changed_obj(old_obj, new_obj, name, fields, id_):
     return found_change, "\n".join(message)
 
 
-def render_all_bills(old_bills, new_bills):
+def render_all_bills(old_bills, new_bills, config):
     result = []
     for bill_number in new_bills:
         if bill_number not in old_bills:
-            result.append(render_new_bill(new_bills[bill_number]))
+            result.append(render_new_bill(new_bills[bill_number], config))
         else:
             changed, rendering = maybe_render_changed_bill(
-                old_bills[bill_number], new_bills[bill_number]
+                old_bills[bill_number], new_bills[bill_number], config
             )
             if changed:
                 result.append(rendering)
     return result
 
 
-def render_all_meetings(old_meetings, new_meetings):
+def render_all_meetings(old_meetings, new_meetings, config):
     result = []
     for bill_number in new_meetings:
         if bill_number not in old_meetings:
-            result.append(render_new_meeting(new_meetings[bill_number]))
+            result.append(render_new_meeting(new_meetings[bill_number], config))
         else:
             changed, rendering = maybe_render_changed_meeting(
-                old_meetings[bill_number], new_meetings[bill_number]
+                old_meetings[bill_number], new_meetings[bill_number], config
             )
             if changed:
                 result.append(rendering)
     return result
 
 
-def render_bills_summary(bills):
+def render_bills_summary(bills, config):
     result = ""
-    for bill_id in CONFIG["bills-of-interest"]:
+    for bill_id in config["bills-of-interest"]:
         bill = bills[bill_id]
         result += f"**{bill_id}**: ({bill['sponsor']}) {bill['shortTitle']}\n"
         result += f"- **Status:** {bill['currentStatus']}\n"
@@ -174,18 +182,27 @@ def save_meeting_database(meetings):
     MEETING_DATABASE_FILE.write_text(json.dumps(meetings, indent=4))
 
 
+def load_config():
+    return json.loads(CONFIG.read_text())
+
+
+def save_config(config):
+    return CONFIG.write_text(json.dumps(config))
+
+
 def dump_all():
     async def run():
         async with aiohttp.ClientSession() as session:
+            config = load_config()
             old_meetings = load_meeting_database()
-            new_meetings = await get_meetings_by_bill(session)
-            for message in render_all_meetings(old_meetings, new_meetings):
+            new_meetings = await get_meetings_by_bill(session, config)
+            for message in render_all_meetings(old_meetings, new_meetings, config):
                 print(message)
                 print("---")
             save_meeting_database(new_meetings)
             old_bills = load_bill_database()
             new_bills = await get_bills(session)
-            for message in render_all_bills(old_bills, new_bills):
+            for message in render_all_bills(old_bills, new_bills, config):
                 print(message)
                 print("---")
             save_bill_database(new_bills)

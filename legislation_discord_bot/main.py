@@ -11,10 +11,10 @@ import aiojobs
 from . import bills
 
 ALLOWED_CHANNELS = [
-    # 535528612502437889,  # Testing channel
-    1181424039756050514,  # Trans North AL channel
-    1193332824846127275,  # readfree
-    1206065865485979689,  # LGBTQ+ Action Group
+    535528612502437889,  # Testing channel
+    # 1181424039756050514,  # Trans North AL channel
+    # 1193332824846127275,  # readfree
+    # 1206065865485979689,  # LGBTQ+ Action Group
 ]
 MESSAGE_SEND_COOLDOWN = 15
 FULL_SCAN_INTERVAL = 15 * 60
@@ -46,16 +46,17 @@ async def check_forever(client):
 async def check_for_updates(client):
     logger.info("Checking for updates")
     async with aiohttp.ClientSession() as session:
+        config = bills.load_config()
         old_bills = bills.load_bill_database()
         new_bills = await bills.get_bills(session)
         old_meetings = bills.load_meeting_database()
-        new_meetings = await bills.get_meetings_by_bill(session)
+        new_meetings = await bills.get_meetings_by_bill(session, config)
         if len(new_bills) < (len(old_bills) / 2):
             logger.info("Sanity check failure. Weird change, ignoring %s", new_bills)
             return
         for message in bills.render_all_meetings(
-            old_meetings, new_meetings
-        ) + bills.render_all_bills(old_bills, new_bills):
+            old_meetings, new_meetings, config
+        ) + bills.render_all_bills(old_bills, new_bills, config):
             logger.info("New message: %s", message)
             for channel_id in ALLOWED_CHANNELS:
                 channel = client.get_channel(channel_id)
