@@ -43,8 +43,6 @@ async def get_bills(session):
         query["variables"]["limit"] = PAGE_SIZE
         query["variables"]["offset"] = offset
 
-        print(f"offset {offset}")
-
         result_json = await graphql(session, query)
 
         for bill in result_json["data"]["instrumentOverviews"]["data"]:
