@@ -43,14 +43,19 @@ async def get_bills(session):
         query["variables"]["limit"] = PAGE_SIZE
         query["variables"]["offset"] = offset
 
+        print(f"offset {offset}")
+
         result_json = await graphql(session, query)
 
         for bill in result_json["data"]["instrumentOverviews"]["data"]:
             bills[bill["instrumentNbr"]] = bill
 
-        if len(result_json["data"]["instrumentOverviews"]["data"]) < PAGE_SIZE:
-            break
         offset += len(result_json["data"]["instrumentOverviews"]["data"])
+        if (
+            offset > result_json["data"]["instrumentOverviews"]["count"]
+            or len(result_json["data"]["instrumentOverviews"]["data"]) < PAGE_SIZE
+        ):
+            break
         await asyncio.sleep(SCRAPE_PAGE_INTERVAL)
 
     return bills
@@ -181,14 +186,14 @@ def dump_all():
 
 BILL_DATABASE_FILE = pathlib.Path("bill-database.json")
 MEETING_DATABASE_FILE = pathlib.Path("meeting-database.json")
-PAGE_SIZE = 2000
+PAGE_SIZE = 15
 SCRAPE_PAGE_INTERVAL = 5
 RELEVANT_BILL_FIELDS = {
     "instrumentNbr": "Bill",
-    "instrumentSponsor": "Sponsor",
+    "sponsor": "Sponsor",
     "assignedCommittee": "Committee",
     "prefiledDate": "Prefiled Date",
-    "firstRead": "First Read",
+    "firstReadDate": "First Read",
     "currentStatus": "Status",
     "subject": "Subject",
     "shortTitle": "Title",
@@ -207,13 +212,13 @@ RELEVANT_MEETING_FIELDS = {
 }
 BASE_QUERY = {
     "operationName": "bills",
-    "query": """query bills($googleId: ID, $category: String, $instrumentType: InstrumentType, $sessionYear: Int, $sessionType: String, $order: Order = [
-"sessionYear", 
+    "query": """query bills($googleId: ID, $category: String, $instrumentType: InstrumentType, $sessionAbbreviation: String, $order: Order = [
+"sessionAbbreviation", 
 "DESC"], $offset: Int, $limit: Int, $where: InstrumentOverviewWhere! = {}, $search: String) {
   instrumentOverviews(
     googleId: $googleId
     category: $category
-    where: [{instrumentType: {eq: $instrumentType}, sessionYear: {eq: $sessionYear}, sessionType: {eq: $sessionType}}, $where]
+    where: [{sessionAbbreviation: {eq: $sessionAbbreviation}, instrumentType: {eq: $instrumentType}}, $where]
     order: $order
     limit: $limit
     offset: $offset
@@ -224,14 +229,15 @@ BASE_QUERY = {
       id
       sessionYear
       instrumentNbr
-      instrumentSponsor
+      sponsor
       sessionType
       body
       subject
       shortTitle
       assignedCommittee
+      allCommittees
       prefiledDate
-      firstRead
+      firstReadDate
       currentStatus
       lastAction
       actSummary
@@ -249,8 +255,8 @@ BASE_QUERY = {
 fragment billModalDataFragment on InstrumentOverview {
   id
   instrumentType
+  sessionAbbreviation
   sessionType
-  sessionYear
   instrumentNbr
   actSummary
   effectiveDateCertain
@@ -261,13 +267,48 @@ fragment billModalDataFragment on InstrumentOverview {
         "instrumentType": "B",
         "limit": 15,
         "offset": 0,
-        "sessionType": "2025 Regular Session",
+        "sessionAbbreviation": "2025RS",
         "where": {},
     },
 }
 BASE_QUERY_MEETING = {
     "operationName": "meetings",
-    "query": "query meetings($body: OrganizationBody, $managedInLinx: Boolean, $autoScroll: Boolean!) {\n  meetings(\n    where: {body: {eq: $body}, startDate: {gteToday: true}, managedInLinx: {eq: $managedInLinx}}\n  ) {\n    data {\n      id\n      startDate\n      startTime\n      location\n      title\n      description\n      body\n      hasPublicHearing\n      hasLiveStream\n      committee\n      agendaUrl\n      agendaItems @skip(if: $autoScroll) {\n        id\n        sessionType\n        sessionYear\n        instrumentNumber\n        shortTitle\n        matter\n        recommendation\n        hasPublicHearing\n        sponsor\n        __typename\n      }\n      __typename\n    }\n    count\n    __typename\n  }\n}",
+    "query": """
+query meetings($body: OrganizationBody, $managedInLinx: Boolean, $autoScroll: Boolean!) {
+  meetings(
+    where: {body: {eq: $body}, startDate: {gteToday: true}, managedInLinx: {eq: $managedInLinx}}
+  ) {
+    data {
+      id
+      startDate
+      startTime
+      location
+      title
+      description
+      body
+      hasPublicHearing
+      hasLiveStream
+      committee
+      agendaUrl
+      agendaItems @skip(if: $autoScroll) {
+        id
+        sessionType
+        sessionYear
+        instrumentNbr
+        shortTitle
+        matter
+        recommendation
+        hasPublicHearing
+        sponsor
+        __typename
+      }
+      __typename
+    }
+    count
+    __typename
+  }
+}
+    """,
     "variables": {"autoScroll": False},
 }
 
