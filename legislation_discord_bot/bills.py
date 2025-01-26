@@ -147,6 +147,16 @@ def render_all_meetings(old_meetings, new_meetings):
     return result
 
 
+def render_bills_summary(bills):
+    result = ""
+    for bill_id in CONFIG["bills-of-interest"]:
+        bill = bills[bill_id]
+        result += f"**{bill_id}**: {bill['shortTitle']}\n"
+        result += f"- **Status:** {bill['currentStatus']}\n"
+        result += "\n"
+    return result
+
+
 def load_bill_database():
     return json.loads(BILL_DATABASE_FILE.read_text())
 

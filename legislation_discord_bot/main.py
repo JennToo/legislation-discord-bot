@@ -1,8 +1,10 @@
 import os
 import asyncio
 import logging
+import datetime
 
 import discord
+import discord.app_commands
 import aiohttp
 import aiojobs
 
@@ -17,8 +19,6 @@ ALLOWED_CHANNELS = [
 MESSAGE_SEND_COOLDOWN = 15
 FULL_SCAN_INTERVAL = 15 * 60
 
-intents = discord.Intents.default()
-intents.message_content = True
 logger = logging.getLogger("discord")
 
 
@@ -28,9 +28,10 @@ class Client(discord.Client):
         self.scheduler = None
 
     async def on_ready(self):
+        await tree.sync()
         if self.scheduler is None:
             self.scheduler = aiojobs.Scheduler()
-            await self.scheduler.spawn(check_forever(self))
+            # await self.scheduler.spawn(check_forever(self))
 
 
 async def check_forever(client):
@@ -65,6 +66,23 @@ async def check_for_updates(client):
     logger.info("Check done")
 
 
+intents = discord.Intents.default()
+intents.message_content = True
+client = Client(intents=intents)
+tree = discord.app_commands.CommandTree(client)
+
+
+@tree.command(name="status", description="Status of bills-of-interest")
+async def status_command(interaction):
+    bill_db = bills.load_bill_database()
+    summary = bills.render_bills_summary(bill_db)
+    db_update = datetime.datetime.fromtimestamp(
+        bills.BILL_DATABASE_FILE.stat().st_mtime, tz=datetime.timezone.utc
+    )
+
+    message = f"## Status of Bills of Interest\n{summary}_Last DB Update: {db_update.isoformat()}Z_"
+    await interaction.response.send_message(message)
+
+
 def main():
-    client = Client(intents=intents)
     client.run(os.environ["LEGIBOT_TOKEN"])
