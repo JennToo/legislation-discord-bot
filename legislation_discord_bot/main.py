@@ -31,7 +31,7 @@ class Client(discord.Client):
         await tree.sync()
         if self.scheduler is None:
             self.scheduler = aiojobs.Scheduler()
-            # await self.scheduler.spawn(check_forever(self))
+            await self.scheduler.spawn(check_forever(self))
 
 
 async def check_forever(client):

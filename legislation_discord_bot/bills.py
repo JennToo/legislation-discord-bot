@@ -151,8 +151,9 @@ def render_bills_summary(bills):
     result = ""
     for bill_id in CONFIG["bills-of-interest"]:
         bill = bills[bill_id]
-        result += f"**{bill_id}**: {bill['shortTitle']}\n"
+        result += f"**{bill_id}**: ({bill['sponsor']}) {bill['shortTitle']}\n"
         result += f"- **Status:** {bill['currentStatus']}\n"
+        result += f"- **Committee:** {bill['assignedCommittee']}\n"
         result += "\n"
     return result
 
