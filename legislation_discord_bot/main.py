@@ -78,12 +78,14 @@ tree = discord.app_commands.CommandTree(client)
 async def status_command(interaction):
     config = bills.load_config()
     bill_db = bills.load_bill_database()
+    meetings_db = bills.load_meeting_database()
     summary = bills.render_bills_summary(bill_db, config)
+    summary += bills.render_meetings_summary(meetings_db, config)
     db_update = datetime.datetime.fromtimestamp(
         bills.BILL_DATABASE_FILE.stat().st_mtime, tz=datetime.timezone.utc
     )
 
-    message = f"## Status of Bills of Interest\n{summary}_Last DB Update: {db_update.isoformat()}Z_"
+    message = f"{summary}_Last DB Update: {db_update.isoformat()}Z_"
     await interaction.response.send_message(message)
 
 

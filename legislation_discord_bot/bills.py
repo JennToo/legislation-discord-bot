@@ -159,12 +159,27 @@ def render_all_meetings(old_meetings, new_meetings, config):
 
 
 def render_bills_summary(bills, config):
-    result = ""
+    result = "## Status of Bills of Interest\n"
     for bill_id in config["bills-of-interest"]:
         bill = bills[bill_id]
         result += f"**{bill_id}**: ({bill['sponsor']}) {bill['shortTitle']}\n"
         result += f"- **Status:** {bill['currentStatus']}\n"
         result += f"- **Committee:** {bill['assignedCommittee']}\n"
+        result += "\n"
+    return result
+
+
+def render_meetings_summary(meetings, config):
+    result = "## Meetings for Bills of Interest\n"
+    for bill_id in config["bills-of-interest"]:
+        if bill_id not in meetings:
+            continue
+        meeting = meetings[bill_id]
+        result += f"**{bill_id}**: ({meeting['sponsor']}) {meeting['shortTitle']}\n"
+        result += f"- **Committee:** {meeting['committee']}\n"
+        result += f"- **Location:** {meeting['location']}\n"
+        result += f"- **Date/Time:** {meeting['startDate']}\n"
+        result += f"- **Public Hearing:** {meeting['hasPublicHearing']}\n"
         result += "\n"
     return result
 
