@@ -171,9 +171,11 @@ def render_bills_summary(bills, config):
 
 def render_meetings_summary(meetings, config):
     result = "## Meetings for Bills of Interest\n"
+    found_any = False
     for bill_id in config["bills-of-interest"]:
         if bill_id not in meetings:
             continue
+        found_any = True
         meeting = meetings[bill_id]
         result += f"**{bill_id}**: ({meeting['sponsor']}) {meeting['shortTitle']}\n"
         result += f"- **Committee:** {meeting['committee']}\n"
@@ -181,6 +183,8 @@ def render_meetings_summary(meetings, config):
         result += f"- **Date/Time:** {meeting['startDate']}\n"
         result += f"- **Public Hearing:** {meeting['hasPublicHearing']}\n"
         result += "\n"
+    if not found_any:
+        result += "No meetings for relevant bills found\n"
     return result
 
 
