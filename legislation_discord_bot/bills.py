@@ -30,8 +30,11 @@ async def get_meetings_by_bill(session, config):
     meetings = {}
     for meeting_detail in result_json["data"]["meetings"]["data"]:
         for agenda_item in meeting_detail["agendaItems"]:
-            if agenda_item in config["bills-of-interest"]:
-                meetings[agenda_item] = meeting_detail
+            if agenda_item["instrumentNbr"] in config["bills-of-interest"]:
+                data = deepcopy(agenda_item)
+                for field in AGENDA_ITEM_COPY_ITEMS:
+                    data[field] = meeting_detail[field]
+                meetings[agenda_item["instrumentNbr"]] = data
     return meetings
 
 
@@ -73,7 +76,7 @@ def render_new_bill(bill, config):
 
 def render_new_meeting(meeting, config):
     message = render_new_obj(
-        meeting, "Meeting", RELEVANT_MEETING_FIELDS, meeting["InstrumentNbr"], config
+        meeting, "Meeting", RELEVANT_MEETING_FIELDS, meeting["instrumentNbr"], config
     )
     return "\n".join(message)
 
@@ -224,17 +227,17 @@ RELEVANT_BILL_FIELDS = {
     "subject": "Subject",
     "shortTitle": "Title",
 }
+AGENDA_ITEM_COPY_ITEMS = {"committee", "body", "title", "location", "startDate"}
 RELEVANT_MEETING_FIELDS = {
     "instrumentNbr": "Bill",
     "shortTitle": "Title",
     "sponsor": "Sponsor",
     "committee": "Committee",
     "body": "Body",
-    "publicHearing": "Public Hearing Requested",
-    "eventTitle": "Meeting",
+    "hasPublicHearing": "Public Hearing Requested",
+    "title": "Meeting",
     "location": "Location",
-    "eventDt": "Date",
-    "eventTm": "Time",
+    "startDate": "Date",
 }
 BASE_QUERY = {
     "operationName": "bills",
