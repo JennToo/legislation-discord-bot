@@ -5302,5 +5302,29 @@
         "lastAction": "Pending Committee Action in House of Origin",
         "viewEnacted": null,
         "companionInstrumentNbr": null
+    },
+    "SB91": {
+        "id": "4114733",
+        "instrumentType": "B",
+        "sessionAbbreviation": "2025RS",
+        "sessionType": "2025 Regular Session",
+        "instrumentNbr": "SB91",
+        "actSummary": null,
+        "effectiveDateCertain": null,
+        "effectiveDateOther": null,
+        "__typename": "InstrumentOverview",
+        "sessionYear": 2025,
+        "sponsor": "Kelley",
+        "body": "Senate",
+        "subject": "Military",
+        "shortTitle": "Military installations; local government, approval to construct nearby tall structures required, authorized to seek enjoinment of violative construction",
+        "assignedCommittee": "Veterans and Military Affairs (Senate)",
+        "allCommittees": "Veterans and Military Affairs (Senate)",
+        "prefiledDate": null,
+        "firstReadDate": "2025-02-04",
+        "currentStatus": "Pending Committee Action in House of Origin",
+        "lastAction": "Pending Committee Action in House of Origin",
+        "viewEnacted": null,
+        "companionInstrumentNbr": null
     }
 }
