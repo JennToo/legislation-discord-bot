@@ -162,7 +162,7 @@ def render_bills_summary(bills, config):
     result = "## Status of Bills of Interest\n"
     for bill_id in config["bills-of-interest"]:
         bill = bills[bill_id]
-        result += f"**{bill_id}**: ({bill['sponsor']}) {bill['shortTitle']}\n"
+        result += f"**{bill_id}**: ({bill['sponsor']}) {bill['shortTitle'][:50]}\n"
         result += f"- **Status:** {bill['currentStatus']}\n"
         result += f"- **Committee:** {bill['assignedCommittee']}\n"
         result += "\n"
@@ -177,7 +177,7 @@ def render_meetings_summary(meetings, config):
             continue
         found_any = True
         meeting = meetings[bill_id]
-        result += f"**{bill_id}**: ({meeting['sponsor']}) {meeting['shortTitle']}\n"
+        result += f"**{bill_id}**: ({meeting['sponsor']}) {meeting['shortTitle'][:50]}\n"
         result += f"- **Committee:** {meeting['committee']}\n"
         result += f"- **Location:** {meeting['location']}\n"
         result += f"- **Date/Time:** {meeting['startDate']}\n"
