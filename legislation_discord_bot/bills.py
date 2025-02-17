@@ -162,18 +162,25 @@ def render_all_meetings(old_meetings, new_meetings, config):
 
 
 def render_bills_summary(bills, config):
-    result = "## Status of Bills of Interest\n"
+    result = "## Status\n"
     for bill_id in config["bills-of-interest"]:
         bill = bills[bill_id]
-        result += f"**{bill_id}**: ({bill['sponsor']}) {bill['shortTitle'][:50]}\n"
-        result += f"- **Status:** {bill['currentStatus']}\n"
-        result += f"- **Committee:** {bill['assignedCommittee']}\n"
+        result += f"**{bill_id}**: ({bill['sponsor']}) {bill['shortTitle'][:40]}\n"
+        result += f"- S:{bill['currentStatus']}\n"
+        result += f"- Com:{bill['assignedCommittee']}\n"
         result += "\n"
+    result = (
+        result.replace("House of Origin", "HoO")
+        .replace("Second", "2nd")
+        .replace("Committee", "Com")
+        .replace("(House)", "(H)")
+        .replace("(Senate)", "(S)")
+    )
     return result
 
 
 def render_meetings_summary(meetings, config):
-    result = "## Meetings for Bills of Interest\n"
+    result = "## Meetings\n"
     found_any = False
     for bill_id in config["bills-of-interest"]:
         if bill_id not in meetings:
@@ -183,10 +190,10 @@ def render_meetings_summary(meetings, config):
         result += (
             f"**{bill_id}**: ({meeting['sponsor']}) {meeting['shortTitle'][:50]}\n"
         )
-        result += f"- **Committee:** {meeting['committee']}\n"
-        result += f"- **Location:** {meeting['location']}\n"
-        result += f"- **Date/Time:** {meeting['startDate']}\n"
-        result += f"- **Public Hearing:** {meeting['hasPublicHearing']}\n"
+        result += f"- **C:** {meeting['committee']}\n"
+        result += f"- **Loc:** {meeting['location']}\n"
+        result += f"- **Time:** {meeting['startDate']}\n"
+        result += f"- **PubHear:** {meeting['hasPublicHearing']}\n"
         result += "\n"
     if not found_any:
         result += "No meetings for relevant bills found\n"

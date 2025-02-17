@@ -11,11 +11,11 @@
             "hasPublicHearing": false,
             "sponsor": "Almond",
             "__typename": "AgendaItem",
-            "startDate": "2025-02-19T19:30:00.000Z",
             "title": "County and Municipal Government Standing Meeting",
+            "committee": "County and Municipal Government (House)",
             "location": "Room 418",
             "body": "House",
-            "committee": "County and Municipal Government (House)"
+            "startDate": "2025-02-19T19:30:00.000Z"
         }
     },
     "535528612074356739": {
