@@ -2,6 +2,7 @@ import os
 import asyncio
 import logging
 import datetime
+import re
 
 import discord
 import discord.app_commands
@@ -10,14 +11,7 @@ import aiojobs
 
 from . import bills
 
-ALLOWED_CHANNELS = [
-    # 535528612502437889,  # Testing channel
-    1181424039756050514,  # Trans North AL channel
-    1193332824846127275,  # readfree
-    1206065865485979689,  # LGBTQ+ Action Group
-]
-ADMIN_ID = 258068291128524802
-MESSAGE_SEND_COOLDOWN = 15
+MESSAGE_SEND_COOLDOWN = 1
 FULL_SCAN_INTERVAL = 15 * 60
 
 logger = logging.getLogger("discord")
@@ -49,22 +43,35 @@ async def check_for_updates(client):
     async with aiohttp.ClientSession() as session:
         config = bills.load_config()
         old_bills = bills.load_bill_database()
+        logger.info("Scraping bills")
         new_bills = await bills.get_bills(session)
         old_meetings = bills.load_meeting_database()
-        new_meetings = await bills.get_meetings_by_bill(session, config)
-        if len(new_bills) < (len(old_bills) / 2):
-            logger.info("Sanity check failure. Weird change, ignoring %s", new_bills)
-            return
-        for message in bills.render_all_meetings(
-            old_meetings, new_meetings, config
-        ) + bills.render_all_bills(old_bills, new_bills, config):
-            logger.info("New message: %s", message)
-            for channel_id in ALLOWED_CHANNELS:
-                channel = client.get_channel(channel_id)
+        logger.info("Scraping meetings")
+        new_meetings = await bills.get_meetings(session)
+
+        for server in config["servers"]:
+            if not server["enabled"]:
+                continue
+            if server.get("dev_mode"):
+                continue
+            if len(new_bills) < (len(old_bills) / 2):
+                logger.info(
+                    "Sanity check failure. Weird change, ignoring %s", new_bills
+                )
+                return
+            old_server_meetings = old_meetings.get(server["server_id"], {})
+            new_server_meetings = await bills.get_meetings_by_bill(new_meetings, server)
+            for message in bills.render_all_meetings(
+                old_server_meetings, new_server_meetings, server
+            ) + bills.render_all_bills(old_bills, new_bills, server):
+                logger.info("New message: %s", message)
+                channel = client.get_channel(int(server["channel_id"]))
                 await channel.send(message)
-            await asyncio.sleep(MESSAGE_SEND_COOLDOWN)
-        bills.save_bill_database(new_bills)
-        bills.save_meeting_database(new_meetings)
+                await asyncio.sleep(MESSAGE_SEND_COOLDOWN)
+            bills.save_bill_database(new_bills)
+            old_meetings[server["server_id"]] = new_server_meetings
+
+        bills.save_meeting_database(old_meetings)
     logger.info("Check done")
 
 
@@ -77,27 +84,46 @@ tree = discord.app_commands.CommandTree(client)
 @tree.command(name="status", description="Status of bills-of-interest")
 async def status_command(interaction):
     config = bills.load_config()
+
     bill_db = bills.load_bill_database()
     meetings_db = bills.load_meeting_database()
-    summary = bills.render_bills_summary(bill_db, config)
-    summary += bills.render_meetings_summary(meetings_db, config)
     db_update = datetime.datetime.fromtimestamp(
         bills.BILL_DATABASE_FILE.stat().st_mtime, tz=datetime.timezone.utc
     )
 
+    servers_by_id = {x["server_id"]: x for x in config["servers"]}
+    server_config = servers_by_id.get(str(interaction.guild_id))
+    if not server_config:
+        summary = "(No bills or meetings can be included because the config for this server wasn't found)\n"
+    else:
+        summary = bills.render_bills_summary(bill_db, server_config)
+        summary += bills.render_meetings_summary(meetings_db, server_config)
+
     message = f"{summary}_Last DB Update: {db_update.isoformat()}Z_"
+    if len(message) > 2000:
+        message = f"{message[:1950]}\n(Truncated, too long)"
     await interaction.response.send_message(message)
+
+
+BILL_REGEX = re.compile(r"^(H|S)B\d+$")
 
 
 @tree.command(name="mark", description="Mark a bill for following")
 async def mark(interaction, bill: str):
     config = bills.load_config()
-    if interaction.user.id != ADMIN_ID:
-        message = "Sorry, only Jen can use this command"
+    servers_by_id = {x["server_id"]: x for x in config["servers"]}
+    server_config = servers_by_id.get(str(interaction.guild_id))
+    if not BILL_REGEX.match(bill):
+        message = f"Invalid bill {bill}"
+    elif not server_config:
+        message = "Error: this server is not configured for the bot"
     else:
-        if bill not in config["bills-of-interest"]:
-            config["bills-of-interest"].append(bill)
-        message = f"OK, new bills are: {config['bills-of-interest']}"
+        if bill not in server_config["bills-of-interest"]:
+            server_config["bills-of-interest"].append(bill)
+        message = (
+            f"Bill {bill} is now marked as a bill of interest for this server.\n"
+            f"All tracked bills for this server: {', '.join(server_config['bills-of-interest'])}"
+        )
         bills.save_config(config)
     await interaction.response.send_message(message)
 
@@ -105,13 +131,20 @@ async def mark(interaction, bill: str):
 @tree.command(name="unmark", description="Unmark a bill for following")
 async def unmark(interaction, bill: str):
     config = bills.load_config()
-    if interaction.user.id != ADMIN_ID:
-        message = "Sorry, only Jen can use this command"
+    servers_by_id = {x["server_id"]: x for x in config["servers"]}
+    server_config = servers_by_id.get(str(interaction.guild_id))
+    if not BILL_REGEX.match(bill):
+        message = f"Invalid bill ID {bill}"
+    elif not server_config:
+        message = "Error: this server is not configured for the bot"
     else:
-        config["bills-of-interest"] = [
-            x for x in config["bills-of-interest"] if x != bill
+        server_config["bills-of-interest"] = [
+            x for x in server_config["bills-of-interest"] if x != bill
         ]
-        message = f"OK, new bills are: {config['bills-of-interest']}"
+        message = (
+            f"Bill {bill} is has been unmarked as a bill of interest for this server.\n"
+            f"All tracked bills for this server: {', '.join(server_config['bills-of-interest'])}"
+        )
         bills.save_config(config)
     await interaction.response.send_message(message)
 

@@ -1,1 +1,74 @@
-{"bills-of-interest": ["HB4", "HB67", "SB5", "SB6", "HB107", "SB79", "HB244", "HB246", "SB101", "SB58", "HB267"]}
+{
+    "servers": [
+        {
+            "channel_id": "535528612502437889",
+            "server_id": "535528612074356739",
+            "server_name": "Test server",
+            "bills-of-interest": [
+                "SB58",
+                "HB267",
+                "HB280"
+            ],
+            "dev_mode": true,
+            "enabled": true
+        },
+        {
+            "channel_id": "1181424039756050514",
+            "server_id": "577496690865733662",
+            "server_name": "Trans North Alabama",
+            "bills-of-interest": [
+                "HB4",
+                "HB67",
+                "SB5",
+                "SB6",
+                "HB107",
+                "SB79",
+                "HB244",
+                "HB246",
+                "SB101",
+                "SB58",
+                "HB267"
+            ],
+            "enabled": true
+        },
+        {
+            "channel_id": "1193332824846127275",
+            "server_id": "1159265519761903698",
+            "server_name": "At the Root Collective",
+            "bills-of-interest": [
+                "HB4",
+                "HB67",
+                "SB5",
+                "SB6",
+                "HB107",
+                "SB79",
+                "HB244",
+                "HB246",
+                "SB101",
+                "SB58",
+                "HB267",
+                "HB280"
+            ],
+            "enabled": true
+        },
+        {
+            "channel_id": "1206065865485979689",
+            "server_id": "1205335824867004400",
+            "server_name": "LGBTQ Action",
+            "bills-of-interest": [
+                "HB4",
+                "HB67",
+                "SB5",
+                "SB6",
+                "HB107",
+                "SB79",
+                "HB244",
+                "HB246",
+                "SB101",
+                "SB58",
+                "HB267"
+            ],
+            "enabled": true
+        }
+    ]
+}

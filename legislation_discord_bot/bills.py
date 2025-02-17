@@ -24,11 +24,14 @@ async def graphql(session, query):
     return result_json
 
 
-async def get_meetings_by_bill(session, config):
+async def get_meetings(session):
     result_json = await graphql(session, BASE_QUERY_MEETING)
+    return result_json["data"]["meetings"]["data"]
 
+
+async def get_meetings_by_bill(all_meetings, config):
     meetings = {}
-    for meeting_detail in result_json["data"]["meetings"]["data"]:
+    for meeting_detail in all_meetings:
         for agenda_item in meeting_detail["agendaItems"]:
             if agenda_item["instrumentNbr"] in config["bills-of-interest"]:
                 data = deepcopy(agenda_item)
@@ -177,7 +180,9 @@ def render_meetings_summary(meetings, config):
             continue
         found_any = True
         meeting = meetings[bill_id]
-        result += f"**{bill_id}**: ({meeting['sponsor']}) {meeting['shortTitle'][:50]}\n"
+        result += (
+            f"**{bill_id}**: ({meeting['sponsor']}) {meeting['shortTitle'][:50]}\n"
+        )
         result += f"- **Committee:** {meeting['committee']}\n"
         result += f"- **Location:** {meeting['location']}\n"
         result += f"- **Date/Time:** {meeting['startDate']}\n"
@@ -209,7 +214,7 @@ def load_config():
 
 
 def save_config(config):
-    return CONFIG.write_text(json.dumps(config))
+    return CONFIG.write_text(json.dumps(config, indent=4))
 
 
 def dump_all():
@@ -234,7 +239,7 @@ def dump_all():
 
 BILL_DATABASE_FILE = pathlib.Path("bill-database.json")
 MEETING_DATABASE_FILE = pathlib.Path("meeting-database.json")
-PAGE_SIZE = 15
+PAGE_SIZE = 25
 SCRAPE_PAGE_INTERVAL = 5
 RELEVANT_BILL_FIELDS = {
     "instrumentNbr": "Bill",

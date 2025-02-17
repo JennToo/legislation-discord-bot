@@ -1,1 +1,42 @@
-{}
+{
+    "1159265519761903698": {
+        "HB280": {
+            "id": "254214",
+            "sessionType": "2025 Regular Session",
+            "sessionYear": 2025,
+            "instrumentNbr": "HB280",
+            "shortTitle": "Public nuisance, actions to abate or enjoin public nuisances further provided for",
+            "matter": null,
+            "recommendation": null,
+            "hasPublicHearing": false,
+            "sponsor": "Almond",
+            "__typename": "AgendaItem",
+            "startDate": "2025-02-19T19:30:00.000Z",
+            "title": "County and Municipal Government Standing Meeting",
+            "location": "Room 418",
+            "body": "House",
+            "committee": "County and Municipal Government (House)"
+        }
+    },
+    "535528612074356739": {
+        "HB280": {
+            "id": "254214",
+            "sessionType": "2025 Regular Session",
+            "sessionYear": 2025,
+            "instrumentNbr": "HB280",
+            "shortTitle": "Public nuisance, actions to abate or enjoin public nuisances further provided for",
+            "matter": null,
+            "recommendation": null,
+            "hasPublicHearing": false,
+            "sponsor": "Almond",
+            "__typename": "AgendaItem",
+            "startDate": "2025-02-19T19:30:00.000Z",
+            "committee": "County and Municipal Government (House)",
+            "title": "County and Municipal Government Standing Meeting",
+            "location": "Room 418",
+            "body": "House"
+        }
+    },
+    "577496690865733662": {},
+    "1205335824867004400": {}
+}
