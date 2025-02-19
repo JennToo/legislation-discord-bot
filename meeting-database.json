@@ -1,21 +1,21 @@
 {
     "1159265519761903698": {
-        "HB280": {
-            "id": "254214",
+        "HB202": {
+            "id": "226904",
             "sessionType": "2025 Regular Session",
             "sessionYear": 2025,
-            "instrumentNbr": "HB280",
-            "shortTitle": "Public nuisance, actions to abate or enjoin public nuisances further provided for",
+            "instrumentNbr": "HB202",
+            "shortTitle": "Law Enforcement Officers; civil and criminal immunity expanded",
             "matter": null,
             "recommendation": null,
-            "hasPublicHearing": false,
-            "sponsor": "Almond",
+            "hasPublicHearing": true,
+            "sponsor": "Reynolds",
             "__typename": "AgendaItem",
-            "title": "County and Municipal Government Standing Meeting",
-            "committee": "County and Municipal Government (House)",
-            "location": "Room 418",
+            "startDate": "2025-02-19T19:30:00.000Z",
+            "location": "Room 200",
+            "committee": "Judiciary (House)",
             "body": "House",
-            "startDate": "2025-02-19T19:30:00.000Z"
+            "title": "Judiciary Standing Meeting"
         }
     },
     "535528612074356739": {
