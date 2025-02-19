@@ -11,11 +11,11 @@
             "hasPublicHearing": true,
             "sponsor": "Reynolds",
             "__typename": "AgendaItem",
-            "startDate": "2025-02-19T19:30:00.000Z",
-            "location": "Room 200",
             "committee": "Judiciary (House)",
-            "body": "House",
-            "title": "Judiciary Standing Meeting"
+            "location": "Room 200",
+            "title": "Judiciary Standing Meeting",
+            "startDate": "2025-02-19T19:30:00.000Z",
+            "body": "House"
         }
     },
     "535528612074356739": {
@@ -30,11 +30,28 @@
             "hasPublicHearing": false,
             "sponsor": "Almond",
             "__typename": "AgendaItem",
-            "startDate": "2025-02-19T19:30:00.000Z",
+            "body": "House",
             "committee": "County and Municipal Government (House)",
-            "title": "County and Municipal Government Standing Meeting",
             "location": "Room 418",
-            "body": "House"
+            "startDate": "2025-02-19T19:30:00.000Z",
+            "title": "County and Municipal Government Standing Meeting"
+        },
+        "HB147": {
+            "id": "262864",
+            "sessionType": "2025 Regular Session",
+            "sessionYear": 2025,
+            "instrumentNbr": "HB147",
+            "shortTitle": "State government; procurement code, further exceptions provided for volunteer fire departments and rescue squads",
+            "matter": null,
+            "recommendation": null,
+            "hasPublicHearing": false,
+            "sponsor": "Pettus",
+            "__typename": "AgendaItem",
+            "body": "House",
+            "committee": "Fiscal Responsibility (House)",
+            "location": "Room 418",
+            "startDate": "2025-02-19T22:00:00.000Z",
+            "title": "Fiscal Responsibility Standing Meeting"
         }
     },
     "577496690865733662": {},

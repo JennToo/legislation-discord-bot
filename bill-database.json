@@ -5702,11 +5702,11 @@
         "body": "House",
         "subject": "Incarceration",
         "shortTitle": "Convicted felons; restrictions on obtaining occupational licenses by convicted felons revised; certificate of employability for convicted felons created; immunity to employers provided",
-        "assignedCommittee": "Judiciary (House)",
+        "assignedCommittee": null,
         "allCommittees": "Judiciary (House)",
         "prefiledDate": null,
         "firstReadDate": "2025-02-11",
-        "currentStatus": "Pending Committee Action in House of Origin",
+        "currentStatus": "Reported",
         "lastAction": "Pending Committee Action in House of Origin",
         "viewEnacted": null,
         "companionInstrumentNbr": null
@@ -5826,7 +5826,7 @@
         "allCommittees": "Fiscal Responsibility and Economic Development (Senate); Economic Development and Tourism (House)",
         "prefiledDate": null,
         "firstReadDate": "2025-02-11",
-        "currentStatus": "Reported",
+        "currentStatus": "Reported Out of Committee in Second House",
         "lastAction": "Reported Out of Committee Second House",
         "viewEnacted": null,
         "companionInstrumentNbr": null
@@ -8490,7 +8490,7 @@
         "allCommittees": "Fiscal Responsibility and Economic Development (Senate)",
         "prefiledDate": null,
         "firstReadDate": "2025-02-04",
-        "currentStatus": "Reported",
+        "currentStatus": "Reported Out of Committee in House of Origin",
         "lastAction": "Reported Out of Committee House of Origin",
         "viewEnacted": null,
         "companionInstrumentNbr": null
@@ -11466,7 +11466,7 @@
         "allCommittees": "Fiscal Responsibility and Economic Development (Senate)",
         "prefiledDate": null,
         "firstReadDate": "2025-02-13",
-        "currentStatus": "Reported",
+        "currentStatus": "Reported Out of Committee in House of Origin",
         "lastAction": "Reported Out of Committee House of Origin",
         "viewEnacted": null,
         "companionInstrumentNbr": null

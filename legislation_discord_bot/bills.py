@@ -5,6 +5,7 @@ import logging
 from copy import deepcopy
 
 import aiohttp
+import arrow
 
 SESSION_YEAR = "2025"
 SESSION_TYPE = "2025 Regular Session"
@@ -89,7 +90,10 @@ def render_new_obj(obj, name, fields, id_, config):
     if id_ in config["bills-of-interest"]:
         message = [f"# \u26a0 New {name} for Bill of Interest \u26a0"]
     for field, display_name in fields.items():
-        message.append(f" - **{display_name}**: {obj.get(field, 'UNKNOWN')}")
+        value = obj.get(field, "UNKNOWN")
+        if field == "startDate":
+            value = discord_date(value)
+        message.append(f" - **{display_name}**: {value}")
     return message
 
 
@@ -126,6 +130,9 @@ def maybe_render_changed_obj(old_obj, new_obj, name, fields, id_, config):
         old_value = old_obj[field]
         new_value = new_obj[field]
         if old_value != new_value:
+            if field == "startDate":
+                old_value = discord_date(old_value)
+                new_value = discord_date(new_value)
             message.append(f" - **Previous {display_name}**: {old_value}")
             message.append(f" - **New {display_name}**: {new_value}")
             found_change = True
@@ -192,12 +199,19 @@ def render_meetings_summary(meetings, config):
         )
         result += f"- **C:** {meeting['committee']}\n"
         result += f"- **Loc:** {meeting['location']}\n"
-        result += f"- **Time:** {meeting['startDate']}\n"
+        result += f"- **Time:** {discord_date(meeting['startDate'])}\n"
         result += f"- **PubHear:** {meeting['hasPublicHearing']}\n"
         result += "\n"
     if not found_any:
         result += "No meetings for relevant bills found\n"
     return result
+
+
+def discord_date(iso_str):
+    try:
+        return f"<t:{int(arrow.get(iso_str).timestamp())}>"
+    except arrow.parser.ParserError:
+        return iso_str
 
 
 def load_bill_database():

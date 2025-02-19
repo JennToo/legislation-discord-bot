@@ -7,7 +7,8 @@
             "bills-of-interest": [
                 "SB58",
                 "HB267",
-                "HB280"
+                "HB280",
+                "HB147"
             ],
             "dev_mode": true,
             "enabled": true

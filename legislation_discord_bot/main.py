@@ -52,7 +52,7 @@ async def check_for_updates(client):
         for server in config["servers"]:
             if not server["enabled"]:
                 continue
-            if server.get("dev_mode"):
+            if not server.get("dev_mode"):
                 continue
             if len(new_bills) < (len(old_bills) / 2):
                 logger.info(
@@ -99,7 +99,7 @@ async def status_command(interaction):
         summary = bills.render_bills_summary(bill_db, server_config)
         summary += bills.render_meetings_summary(meetings_db, server_config)
 
-    message = f"{summary}_Last DB Update: {db_update.isoformat()}Z_"
+    message = f"{summary}_Last DB Update: <t:{int(db_update.timestamp())}>_"
     if len(message) > 2000:
         message = f"{message[:1950]}\n(Truncated, too long)"
     await interaction.response.send_message(message)
