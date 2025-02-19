@@ -52,7 +52,7 @@ async def check_for_updates(client):
         for server in config["servers"]:
             if not server["enabled"]:
                 continue
-            if not server.get("dev_mode"):
+            if server.get("dev_mode"):
                 continue
             if len(new_bills) < (len(old_bills) / 2):
                 logger.info(
