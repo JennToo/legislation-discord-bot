@@ -66,7 +66,7 @@ async def check_for_updates(client):
             ) + bills.render_all_bills(old_bills, new_bills, server):
                 logger.info("New message: %s", message)
                 channel = client.get_channel(int(server["channel_id"]))
-                await channel.send(message)
+                await channel.send(message[:1950])
                 await asyncio.sleep(MESSAGE_SEND_COOLDOWN)
             bills.save_bill_database(new_bills)
             old_meetings[server["server_id"]] = new_server_meetings
