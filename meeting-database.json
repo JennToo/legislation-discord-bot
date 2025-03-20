@@ -1,23 +1,5 @@
 {
-    "1159265519761903698": {
-        "HB202": {
-            "id": "226904",
-            "sessionType": "2025 Regular Session",
-            "sessionYear": 2025,
-            "instrumentNbr": "HB202",
-            "shortTitle": "Law Enforcement Officers; civil and criminal immunity expanded",
-            "matter": null,
-            "recommendation": null,
-            "hasPublicHearing": true,
-            "sponsor": "Reynolds",
-            "__typename": "AgendaItem",
-            "title": "Judiciary Standing Meeting",
-            "location": "Room 200",
-            "startDate": "2025-02-19T19:30:00.000Z",
-            "committee": "Judiciary (House)",
-            "body": "House"
-        }
-    },
+    "1159265519761903698": {},
     "535528612074356739": {
         "HB280": {
             "id": "254214",
@@ -55,5 +37,6 @@
         }
     },
     "577496690865733662": {},
-    "1205335824867004400": {}
+    "1205335824867004400": {},
+    "1205335824867004446": {}
 }
