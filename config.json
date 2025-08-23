@@ -5,10 +5,6 @@
             "server_id": "535528612074356739",
             "server_name": "Test server",
             "bills-of-interest": [
-                "SB58",
-                "HB267",
-                "HB280",
-                "HB147"
             ],
             "dev_mode": true,
             "enabled": true
@@ -18,19 +14,6 @@
             "server_id": "577496690865733662",
             "server_name": "Trans North Alabama",
             "bills-of-interest": [
-                "HB4",
-                "HB67",
-                "SB5",
-                "SB6",
-                "HB107",
-                "SB79",
-                "HB244",
-                "HB246",
-                "SB101",
-                "SB58",
-                "HB267",
-                "HB560",
-                "HB618"
             ],
             "enabled": true
         },
@@ -39,24 +22,6 @@
             "server_id": "1159265519761903698",
             "server_name": "At the Root Collective",
             "bills-of-interest": [
-                "HB4",
-                "HB67",
-                "HB244",
-                "HB246",
-                "SB101",
-                "HB202",
-                "HB291",
-                "HB296",
-                "SB186",
-                "SB187",
-                "HB319",
-                "HB186",
-                "SB277",
-                "SB53",
-                "HB518",
-                "HB559",
-                "HB560",
-                "HB611"
             ],
             "enabled": true
         },
@@ -65,15 +30,14 @@
             "server_id": "1205335824867004446",
             "server_name": "LGBTQ Action",
             "bills-of-interest": [
-                "HB4",
-                "HB67",
-                "SB6",
-                "HB244",
-                "HB246",
-                "SB101",
-                "SB58",
-                "HB267",
-                "HB560"
+            ],
+            "enabled": true
+        },
+        {
+            "channel_id": "1408543884295798926",
+            "server_id": "1337181721719734314",
+            "server_name": "HBF",
+            "bills-of-interest": [
             ],
             "enabled": true
         }
