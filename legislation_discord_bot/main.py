@@ -3,6 +3,7 @@ import asyncio
 import logging
 import datetime
 import re
+import pathlib
 
 import discord
 import discord.app_commands
@@ -13,9 +14,24 @@ from . import bills
 
 MESSAGE_SEND_COOLDOWN = 1
 FULL_SCAN_INTERVAL = 15 * 60
+MOTD = """
+_In the distance, the sound of a wretched and horrible machine churns to life._
+
+## Bills for the 2026 Session begin here
+
+As a reminder, each server can maintain a list of bills-of-interest with the /mark and /unmark commands.
+
+View the status of marked bills with /status
+
+For marked bills, meetings notifications will be generated (assuming they are marked correctly in the website)
+
+The polling interval for new/updated bills will remain low until the session gets closer.
+
+For bot issues please contact @jenntoo
+""".strip()
+MOTD_VERSION = 1
 
 logger = logging.getLogger("discord")
-
 
 class Client(discord.Client):
     def __init__(self, intents):
@@ -43,6 +59,18 @@ async def check_for_updates(client):
     async with aiohttp.ClientSession() as session:
         config = bills.load_config()
         old_bills = bills.load_bill_database()
+
+        for server in config["servers"]:
+            if server.get("motd", 0) >= MOTD_VERSION:
+                continue
+            if not server.get("dev_mode"):
+                continue
+            channel = client.get_channel(int(server["channel_id"]))
+            await channel.send(MOTD)
+            await asyncio.sleep(MESSAGE_SEND_COOLDOWN)
+            server["motd"] = MOTD_VERSION
+            bills.save_config(config)
+
         logger.info("Scraping bills")
         new_bills = await bills.get_bills(session)
         old_meetings = bills.load_meeting_database()
@@ -52,7 +80,7 @@ async def check_for_updates(client):
         for server in config["servers"]:
             if not server["enabled"]:
                 continue
-            if server.get("dev_mode"):
+            if not server.get("dev_mode"):
                 continue
             if len(new_bills) < (len(old_bills) / 2):
                 logger.info(

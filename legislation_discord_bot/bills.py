@@ -7,10 +7,10 @@ from copy import deepcopy
 import aiohttp
 import arrow
 
-SESSION_YEAR = "2025"
-SESSION_TYPE = "2025 Regular Session"
+SESSION_YEAR = "2026"
+SESSION_TYPE = "2026 Regular Session"
 INTRODUCED_BILL_LINK_TEMPLATE = (
-    "https://www.legislature.state.al.us/pdf/SearchableInstruments/2025RS/{}-int.pdf"
+    "https://www.legislature.state.al.us/pdf/SearchableInstruments/2026RS/{}-int.pdf"
 )
 CONFIG = pathlib.Path("./config.json")
 
@@ -341,7 +341,7 @@ fragment billModalDataFragment on InstrumentOverview {
         "instrumentType": "B",
         "limit": 15,
         "offset": 0,
-        "sessionAbbreviation": "2025RS",
+        "sessionAbbreviation": "2026RS",
         "where": {},
     },
 }

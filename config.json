@@ -4,41 +4,37 @@
             "channel_id": "535528612502437889",
             "server_id": "535528612074356739",
             "server_name": "Test server",
-            "bills-of-interest": [
-            ],
+            "bills-of-interest": [],
             "dev_mode": true,
-            "enabled": true
+            "enabled": true,
+            "motd": 1
         },
         {
             "channel_id": "1181424039756050514",
             "server_id": "577496690865733662",
             "server_name": "Trans North Alabama",
-            "bills-of-interest": [
-            ],
+            "bills-of-interest": [],
             "enabled": true
         },
         {
             "channel_id": "1193332824846127275",
             "server_id": "1159265519761903698",
             "server_name": "At the Root Collective",
-            "bills-of-interest": [
-            ],
+            "bills-of-interest": [],
             "enabled": true
         },
         {
             "channel_id": "1206065865485979689",
             "server_id": "1205335824867004446",
             "server_name": "LGBTQ Action",
-            "bills-of-interest": [
-            ],
+            "bills-of-interest": [],
             "enabled": true
         },
         {
             "channel_id": "1408543884295798926",
             "server_id": "1337181721719734314",
             "server_name": "HBF",
-            "bills-of-interest": [
-            ],
+            "bills-of-interest": [],
             "enabled": true
         }
     ]
