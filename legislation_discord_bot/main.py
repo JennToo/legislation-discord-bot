@@ -13,7 +13,7 @@ import aiojobs
 from . import bills
 
 MESSAGE_SEND_COOLDOWN = 1
-FULL_SCAN_INTERVAL = 15 * 60
+FULL_SCAN_INTERVAL = 60 * 60
 MOTD = """
 _In the distance, the sound of a wretched and horrible machine churns to life._
 
@@ -30,6 +30,7 @@ The polling interval for new/updated bills will remain low until the session get
 For bot issues please contact @jenntoo
 """.strip()
 MOTD_VERSION = 1
+DEV_MODE = False
 
 logger = logging.getLogger("discord")
 
@@ -63,9 +64,10 @@ async def check_for_updates(client):
         for server in config["servers"]:
             if server.get("motd", 0) >= MOTD_VERSION:
                 continue
-            if not server.get("dev_mode"):
+            if server.get("dev_mode", False) != DEV_MODE:
                 continue
             channel = client.get_channel(int(server["channel_id"]))
+            logger.info("Sending MOTD to %s", server["server_name"])
             await channel.send(MOTD)
             await asyncio.sleep(MESSAGE_SEND_COOLDOWN)
             server["motd"] = MOTD_VERSION
@@ -77,22 +79,23 @@ async def check_for_updates(client):
         logger.info("Scraping meetings")
         new_meetings = await bills.get_meetings(session)
 
+        if len(new_bills) < (len(old_bills) / 2):
+            logger.info(
+                "Sanity check failure. Weird change, ignoring %s", new_bills
+            )
+            return
+
         for server in config["servers"]:
             if not server["enabled"]:
                 continue
-            if not server.get("dev_mode"):
+            if server.get("dev_mode", False) != DEV_MODE:
                 continue
-            if len(new_bills) < (len(old_bills) / 2):
-                logger.info(
-                    "Sanity check failure. Weird change, ignoring %s", new_bills
-                )
-                return
             old_server_meetings = old_meetings.get(server["server_id"], {})
             new_server_meetings = await bills.get_meetings_by_bill(new_meetings, server)
             for message in bills.render_all_meetings(
                 old_server_meetings, new_server_meetings, server
             ) + bills.render_all_bills(old_bills, new_bills, server):
-                logger.info("New message: %s", message)
+                logger.info("New message for server %s: %s", server["server_name"], message)
                 channel = client.get_channel(int(server["channel_id"]))
                 await channel.send(message[:1950])
                 await asyncio.sleep(MESSAGE_SEND_COOLDOWN)
