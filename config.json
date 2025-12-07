@@ -23,7 +23,11 @@
             "channel_id": "1193332824846127275",
             "server_id": "1159265519761903698",
             "server_name": "At the Root Collective",
-            "bills-of-interest": [],
+            "bills-of-interest": [
+                "SB3",
+                "HB76",
+                "SB4"
+            ],
             "enabled": true,
             "motd": 1
         },
