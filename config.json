@@ -44,6 +44,14 @@
             ],
             "enabled": true,
             "motd": 1
+        },
+        {
+            "channel_id": "1408543884295798926",
+            "server_id": "1337181721719734314",
+            "server_name": "HBF",
+            "bills-of-interest": [],
+            "enabled": true,
+            "motd": 1
         }
     ]
 }
