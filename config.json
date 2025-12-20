@@ -26,7 +26,11 @@
             "bills-of-interest": [
                 "SB3",
                 "HB76",
-                "SB4"
+                "SB4",
+                "SB34",
+                "HB50",
+                "SB26",
+                "SB27"
             ],
             "enabled": true,
             "motd": 1
