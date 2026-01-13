@@ -13,7 +13,7 @@ import aiojobs
 from . import bills
 
 MESSAGE_SEND_COOLDOWN = 1
-FULL_SCAN_INTERVAL = 60 * 60
+FULL_SCAN_INTERVAL = 20 * 60
 MOTD = """
 _In the distance, the sound of a wretched and horrible machine churns to life._
 

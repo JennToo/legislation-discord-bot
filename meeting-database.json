@@ -13,10 +13,10 @@
             "sponsor": "Collins",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T19:30:00.000Z",
-            "body": "House",
-            "location": "Room 206",
             "title": "Education Policy Standing Meeting",
-            "committee": "Education Policy (House)"
+            "body": "House",
+            "committee": "Education Policy (House)",
+            "location": "Room 206"
         }
     },
     "1205335824867004446": {},
@@ -33,10 +33,10 @@
             "sponsor": "Hollis",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T15:00:00.000Z",
-            "body": "House",
-            "location": "Room 617",
             "title": "Financial Services Standing Meeting",
-            "committee": "Financial Services (House)"
+            "body": "House",
+            "committee": "Financial Services (House)",
+            "location": "Room 617"
         },
         "HB74": {
             "id": "15695099",
@@ -50,10 +50,10 @@
             "sponsor": "Robertson",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T15:00:00.000Z",
-            "body": "House",
-            "location": "Room 206",
             "title": "Public Safety and Homeland Security Standing Meeting",
-            "committee": "Public Safety and Homeland Security (House)"
+            "body": "House",
+            "committee": "Public Safety and Homeland Security (House)",
+            "location": "Room 206"
         },
         "HB42": {
             "id": "15695098",
@@ -67,10 +67,10 @@
             "sponsor": "Treadaway",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T15:00:00.000Z",
-            "body": "House",
-            "location": "Room 206",
             "title": "Public Safety and Homeland Security Standing Meeting",
-            "committee": "Public Safety and Homeland Security (House)"
+            "body": "House",
+            "committee": "Public Safety and Homeland Security (House)",
+            "location": "Room 206"
         },
         "HB35": {
             "id": "15695097",
@@ -84,10 +84,10 @@
             "sponsor": "Bolton",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T15:00:00.000Z",
-            "body": "House",
-            "location": "Room 206",
             "title": "Public Safety and Homeland Security Standing Meeting",
-            "committee": "Public Safety and Homeland Security (House)"
+            "body": "House",
+            "committee": "Public Safety and Homeland Security (House)",
+            "location": "Room 206"
         },
         "HB33": {
             "id": "15695096",
@@ -101,10 +101,10 @@
             "sponsor": "Bolton",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T15:00:00.000Z",
-            "body": "House",
-            "location": "Room 206",
             "title": "Public Safety and Homeland Security Standing Meeting",
-            "committee": "Public Safety and Homeland Security (House)"
+            "body": "House",
+            "committee": "Public Safety and Homeland Security (House)",
+            "location": "Room 206"
         },
         "HB10": {
             "id": "15695095",
@@ -118,10 +118,10 @@
             "sponsor": "Pettus",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T15:00:00.000Z",
-            "body": "House",
-            "location": "Room 206",
             "title": "Public Safety and Homeland Security Standing Meeting",
-            "committee": "Public Safety and Homeland Security (House)"
+            "body": "House",
+            "committee": "Public Safety and Homeland Security (House)",
+            "location": "Room 206"
         },
         "HB1": {
             "id": "15695094",
@@ -135,10 +135,10 @@
             "sponsor": "Boyd",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T15:00:00.000Z",
-            "body": "House",
-            "location": "Room 206",
             "title": "Public Safety and Homeland Security Standing Meeting",
-            "committee": "Public Safety and Homeland Security (House)"
+            "body": "House",
+            "committee": "Public Safety and Homeland Security (House)",
+            "location": "Room 206"
         },
         "HB31": {
             "id": "15703469",
@@ -152,10 +152,10 @@
             "sponsor": "Ingram",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T16:30:00.000Z",
-            "body": "House",
-            "location": "Room 206",
             "title": "Health Standing Meeting",
-            "committee": "Health (House)"
+            "body": "House",
+            "committee": "Health (House)",
+            "location": "Room 206"
         },
         "HB59": {
             "id": "15695351",
@@ -169,10 +169,10 @@
             "sponsor": "Underwood",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T16:30:00.000Z",
-            "body": "House",
-            "location": "Room 123 UPDATED AGENDA",
             "title": "Boards, Agencies and Commissions Standing Meeting",
-            "committee": "Boards, Agencies and Commissions (House)"
+            "body": "House",
+            "committee": "Boards, Agencies and Commissions (House)",
+            "location": "Room 123 UPDATED AGENDA"
         },
         "HB27": {
             "id": "15694871",
@@ -186,10 +186,10 @@
             "sponsor": "Brown",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T16:30:06.000Z",
-            "body": "House",
-            "location": "Room 617",
             "title": "Insurance Standing Meeting",
-            "committee": "Insurance (House)"
+            "body": "House",
+            "committee": "Insurance (House)",
+            "location": "Room 617"
         },
         "HB40": {
             "id": "15694870",
@@ -203,10 +203,10 @@
             "sponsor": "Gray",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T16:30:06.000Z",
-            "body": "House",
-            "location": "Room 617",
             "title": "Insurance Standing Meeting",
-            "committee": "Insurance (House)"
+            "body": "House",
+            "committee": "Insurance (House)",
+            "location": "Room 617"
         },
         "SB30": {
             "id": "15703730",
@@ -220,10 +220,10 @@
             "sponsor": "Woods",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T17:00:00.000Z",
-            "body": "Senate",
-            "location": "Room 325",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (Senate)"
+            "body": "Senate",
+            "committee": "Judiciary (Senate)",
+            "location": "Room 325"
         },
         "SB17": {
             "id": "15703726",
@@ -237,10 +237,10 @@
             "sponsor": "Weaver",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T17:00:00.000Z",
-            "body": "Senate",
-            "location": "Room 325",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (Senate)"
+            "body": "Senate",
+            "committee": "Judiciary (Senate)",
+            "location": "Room 325"
         },
         "SB20": {
             "id": "15703727",
@@ -254,10 +254,10 @@
             "sponsor": "Elliott",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T17:00:00.000Z",
-            "body": "Senate",
-            "location": "Room 325",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (Senate)"
+            "body": "Senate",
+            "committee": "Judiciary (Senate)",
+            "location": "Room 325"
         },
         "SB24": {
             "id": "15703728",
@@ -271,10 +271,10 @@
             "sponsor": "Coleman-Madison",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T17:00:00.000Z",
-            "body": "Senate",
-            "location": "Room 325",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (Senate)"
+            "body": "Senate",
+            "committee": "Judiciary (Senate)",
+            "location": "Room 325"
         },
         "SB25": {
             "id": "15703729",
@@ -288,10 +288,10 @@
             "sponsor": "Weaver",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T17:00:00.000Z",
-            "body": "Senate",
-            "location": "Room 325",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (Senate)"
+            "body": "Senate",
+            "committee": "Judiciary (Senate)",
+            "location": "Room 325"
         },
         "SB31": {
             "id": "15703731",
@@ -305,10 +305,10 @@
             "sponsor": "Woods",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T17:00:00.000Z",
-            "body": "Senate",
-            "location": "Room 325",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (Senate)"
+            "body": "Senate",
+            "committee": "Judiciary (Senate)",
+            "location": "Room 325"
         },
         "HB50": {
             "id": "15695117",
@@ -322,10 +322,10 @@
             "sponsor": "Collins",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T19:30:00.000Z",
-            "body": "House",
-            "location": "Room 206",
             "title": "Education Policy Standing Meeting",
-            "committee": "Education Policy (House)"
+            "body": "House",
+            "committee": "Education Policy (House)",
+            "location": "Room 206"
         },
         "HB79": {
             "id": "15703436",
@@ -339,10 +339,10 @@
             "sponsor": "Crawford",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T20:00:00.000Z",
-            "body": "House",
-            "location": "Room 617",
             "title": "Ways and Means General Fund Standing Meeting",
-            "committee": "Ways and Means General Fund (House)"
+            "body": "House",
+            "committee": "Ways and Means General Fund (House)",
+            "location": "Room 617"
         },
         "HB66": {
             "id": "15703435",
@@ -356,10 +356,10 @@
             "sponsor": "Tillman",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T20:00:00.000Z",
-            "body": "House",
-            "location": "Room 617",
             "title": "Ways and Means General Fund Standing Meeting",
-            "committee": "Ways and Means General Fund (House)"
+            "body": "House",
+            "committee": "Ways and Means General Fund (House)",
+            "location": "Room 617"
         },
         "HB95": {
             "id": "15703437",
@@ -373,10 +373,10 @@
             "sponsor": "Lovvorn",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T20:00:00.000Z",
-            "body": "House",
-            "location": "Room 617",
             "title": "Ways and Means General Fund Standing Meeting",
-            "committee": "Ways and Means General Fund (House)"
+            "body": "House",
+            "committee": "Ways and Means General Fund (House)",
+            "location": "Room 617"
         },
         "HB63": {
             "id": "15693820",
@@ -390,10 +390,10 @@
             "sponsor": "Treadaway",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T20:00:00.000Z",
-            "body": "House",
-            "location": "Room 200",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (House)"
+            "body": "House",
+            "committee": "Judiciary (House)",
+            "location": "Room 200"
         },
         "HB19": {
             "id": "15693821",
@@ -407,10 +407,10 @@
             "sponsor": "Sellers",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T20:00:00.000Z",
-            "body": "House",
-            "location": "Room 200",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (House)"
+            "body": "House",
+            "committee": "Judiciary (House)",
+            "location": "Room 200"
         },
         "HB80": {
             "id": "15693822",
@@ -424,10 +424,10 @@
             "sponsor": "Butler",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T20:00:00.000Z",
-            "body": "House",
-            "location": "Room 200",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (House)"
+            "body": "House",
+            "committee": "Judiciary (House)",
+            "location": "Room 200"
         },
         "HB41": {
             "id": "15693823",
@@ -441,10 +441,10 @@
             "sponsor": "Simpson",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T20:00:00.000Z",
-            "body": "House",
-            "location": "Room 200",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (House)"
+            "body": "House",
+            "committee": "Judiciary (House)",
+            "location": "Room 200"
         },
         "HB20": {
             "id": "15693824",
@@ -458,10 +458,10 @@
             "sponsor": "Simpson",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T20:00:00.000Z",
-            "body": "House",
-            "location": "Room 200",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (House)"
+            "body": "House",
+            "committee": "Judiciary (House)",
+            "location": "Room 200"
         },
         "HB60": {
             "id": "15693825",
@@ -475,10 +475,10 @@
             "sponsor": "Tillman",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T20:00:00.000Z",
-            "body": "House",
-            "location": "Room 200",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (House)"
+            "body": "House",
+            "committee": "Judiciary (House)",
+            "location": "Room 200"
         },
         "HB71": {
             "id": "15693827",
@@ -492,10 +492,10 @@
             "sponsor": "England",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T20:00:00.000Z",
-            "body": "House",
-            "location": "Room 200",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (House)"
+            "body": "House",
+            "committee": "Judiciary (House)",
+            "location": "Room 200"
         },
         "HB93": {
             "id": "15693829",
@@ -509,10 +509,10 @@
             "sponsor": "Faulkner",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T20:00:00.000Z",
-            "body": "House",
-            "location": "Room 200",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (House)"
+            "body": "House",
+            "committee": "Judiciary (House)",
+            "location": "Room 200"
         },
         "HB91": {
             "id": "15693828",
@@ -526,10 +526,10 @@
             "sponsor": "Hill",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T20:00:00.000Z",
-            "body": "House",
-            "location": "Room 200",
             "title": "Judiciary Standing Meeting",
-            "committee": "Judiciary (House)"
+            "body": "House",
+            "committee": "Judiciary (House)",
+            "location": "Room 200"
         },
         "HB17": {
             "id": "15695348",
@@ -543,10 +543,10 @@
             "sponsor": "Lamb",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T20:00:00.000Z",
-            "body": "House",
-            "location": "Room 418",
             "title": "County and Municipal Government Standing Meeting",
-            "committee": "County and Municipal Government (House)"
+            "body": "House",
+            "committee": "County and Municipal Government (House)",
+            "location": "Room 418"
         },
         "HB22": {
             "id": "15695349",
@@ -560,10 +560,10 @@
             "sponsor": "Butler",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T20:00:00.000Z",
-            "body": "House",
-            "location": "Room 418",
             "title": "County and Municipal Government Standing Meeting",
-            "committee": "County and Municipal Government (House)"
+            "body": "House",
+            "committee": "County and Municipal Government (House)",
+            "location": "Room 418"
         },
         "HB69": {
             "id": "15704210",
@@ -577,10 +577,10 @@
             "sponsor": "Hammett",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T21:00:00.000Z",
-            "body": "House",
-            "location": "Room 206",
             "title": "State Government Standing Meeting",
-            "committee": "State Government (House)"
+            "body": "House",
+            "committee": "State Government (House)",
+            "location": "Room 206"
         },
         "HB39": {
             "id": "15693911",
@@ -594,10 +594,10 @@
             "sponsor": "Brown",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T22:00:00.000Z",
-            "body": "House",
-            "location": "Room 206",
             "title": "Ports, Waterways and Intermodal Transit Standing Meeting",
-            "committee": "Ports, Waterways and Intermodal Transit (House)"
+            "body": "House",
+            "committee": "Ports, Waterways and Intermodal Transit (House)",
+            "location": "Room 206"
         },
         "HB38": {
             "id": "15693910",
@@ -611,10 +611,10 @@
             "sponsor": "Brown",
             "__typename": "AgendaItem",
             "startDate": "2026-01-14T22:00:00.000Z",
-            "body": "House",
-            "location": "Room 206",
             "title": "Ports, Waterways and Intermodal Transit Standing Meeting",
-            "committee": "Ports, Waterways and Intermodal Transit (House)"
+            "body": "House",
+            "committee": "Ports, Waterways and Intermodal Transit (House)",
+            "location": "Room 206"
         }
     }
 }
