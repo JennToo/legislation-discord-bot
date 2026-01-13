@@ -30,6 +30,7 @@ async def get_meetings(session):
     return result_json["data"]["meetings"]["data"]
 
 
+# Hey bro why are you async tho
 async def get_meetings_by_bill(all_meetings, config):
     meetings = {}
     for meeting_detail in all_meetings:
@@ -52,13 +53,14 @@ async def get_bills(session):
 
         result_json = await graphql(session, query)
 
-        for bill in result_json["data"]["instrumentOverviews"]["data"]:
+        for bill in result_json["data"]["instruments"]["data"]:
             bills[bill["instrumentNbr"]] = bill
 
-        offset += len(result_json["data"]["instrumentOverviews"]["data"])
+        offset += len(result_json["data"]["instruments"]["data"])
+        print(f"Got bills up to {offset}")
         if (
-            offset > result_json["data"]["instrumentOverviews"]["count"]
-            or len(result_json["data"]["instrumentOverviews"]["data"]) < PAGE_SIZE
+            offset > result_json["data"]["instruments"]["count"]
+            or len(result_json["data"]["instruments"]["data"]) < PAGE_SIZE
         ):
             break
         await asyncio.sleep(SCRAPE_PAGE_INTERVAL)
@@ -242,25 +244,31 @@ def dump_all():
     async def run():
         async with aiohttp.ClientSession() as session:
             config = load_config()
-            old_meetings = load_meeting_database()
-            new_meetings = await get_meetings_by_bill(session, config)
-            for message in render_all_meetings(old_meetings, new_meetings, config):
-                print(message)
-                print("---")
-            save_meeting_database(new_meetings)
             old_bills = load_bill_database()
+
+            print("Scraping bills")
             new_bills = await get_bills(session)
-            for message in render_all_bills(old_bills, new_bills, config):
-                print(message)
-                print("---")
-            save_bill_database(new_bills)
+            old_meetings = load_meeting_database()
+            print("Scraping meetings")
+            new_meetings = await get_meetings(session)
+
+            for server in config["servers"]:
+                if not server["enabled"]:
+                    continue
+                old_server_meetings = old_meetings.get(server["server_id"], {})
+                new_server_meetings = await get_meetings_by_bill(new_meetings, server)
+                for message in render_all_meetings(
+                    old_server_meetings, new_server_meetings, server
+                ) + render_all_bills(old_bills, new_bills, server):
+                    print(f"New message for server %s: %s" % (server["server_name"], message))
+                old_meetings[server["server_id"]] = new_server_meetings
 
     asyncio.run(run())
 
 
 BILL_DATABASE_FILE = pathlib.Path("bill-database.json")
 MEETING_DATABASE_FILE = pathlib.Path("meeting-database.json")
-PAGE_SIZE = 25
+PAGE_SIZE = 15
 SCRAPE_PAGE_INTERVAL = 5
 RELEVANT_BILL_FIELDS = {
     "instrumentNbr": "Bill",
@@ -286,13 +294,13 @@ RELEVANT_MEETING_FIELDS = {
 }
 BASE_QUERY = {
     "operationName": "bills",
-    "query": """query bills($googleId: ID, $category: String, $instrumentType: InstrumentType, $sessionAbbreviation: String, $order: Order = [
+    "query": """query bills($googleId: ID, $category: String, $instrumentType: InstrumentType, $prefiledDateFilter: DateFilter, $sessionAbbreviation: String, $order: Order = [
 "sessionAbbreviation", 
-"DESC"], $offset: Int, $limit: Int, $where: InstrumentOverviewWhere! = {}, $search: String) {
-  instrumentOverviews(
+"DESC"], $offset: Int, $limit: Int, $where: InstrumentWhere! = {}, $search: String) {
+  instruments(
     googleId: $googleId
     category: $category
-    where: [{sessionAbbreviation: {eq: $sessionAbbreviation}, instrumentType: {eq: $instrumentType}}, $where]
+    where: [{sessionAbbreviation: {eq: $sessionAbbreviation}, instrumentType: {eq: $instrumentType}, prefiledDate: $prefiledDateFilter}, $where]
     order: $order
     limit: $limit
     offset: $offset
@@ -326,12 +334,11 @@ BASE_QUERY = {
     __typename
   }
 }
-fragment billModalDataFragment on InstrumentOverview {
+fragment billModalDataFragment on Instrument {
   id
-  instrumentType
   sessionAbbreviation
-  sessionType
   instrumentNbr
+  instrumentType
   actSummary
   effectiveDateCertain
   effectiveDateOther
