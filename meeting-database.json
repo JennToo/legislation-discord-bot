@@ -12,11 +12,11 @@
             "hasPublicHearing": false,
             "sponsor": "Collins",
             "__typename": "AgendaItem",
-            "committee": "Education Policy (Senate)",
-            "title": "Education Policy Standing Meeting",
-            "startDate": "2026-02-04T15:00:00.000Z",
             "location": "Room 320 **TIME & ROOM CHANGE",
-            "body": "Senate"
+            "committee": "Education Policy (Senate)",
+            "body": "Senate",
+            "startDate": "2026-02-04T15:00:00.000Z",
+            "title": "Education Policy Standing Meeting"
         }
     },
     "1205335824867004446": {},
@@ -32,11 +32,11 @@
             "hasPublicHearing": false,
             "sponsor": "Pettus",
             "__typename": "AgendaItem",
-            "committee": "Public Safety and Homeland Security (House)",
-            "title": "Public Safety and Homeland Security Standing Meeting",
-            "startDate": "2026-02-04T15:00:00.000Z",
             "location": "Room 206",
-            "body": "House"
+            "committee": "Public Safety and Homeland Security (House)",
+            "body": "House",
+            "startDate": "2026-02-04T15:00:00.000Z",
+            "title": "Public Safety and Homeland Security Standing Meeting"
         },
         "HB86": {
             "id": "16230227",
@@ -49,11 +49,11 @@
             "hasPublicHearing": false,
             "sponsor": "England",
             "__typename": "AgendaItem",
-            "committee": "Public Safety and Homeland Security (House)",
-            "title": "Public Safety and Homeland Security Standing Meeting",
-            "startDate": "2026-02-04T15:00:00.000Z",
             "location": "Room 206",
-            "body": "House"
+            "committee": "Public Safety and Homeland Security (House)",
+            "body": "House",
+            "startDate": "2026-02-04T15:00:00.000Z",
+            "title": "Public Safety and Homeland Security Standing Meeting"
         },
         "HB4": {
             "id": "16235844",
@@ -66,11 +66,11 @@
             "hasPublicHearing": false,
             "sponsor": "Woods",
             "__typename": "AgendaItem",
-            "committee": "Ways and Means Education (House)",
-            "title": "Ways and Means Education Standing Meeting",
-            "startDate": "2026-02-04T15:00:00.000Z",
             "location": "Room 200",
-            "body": "House"
+            "committee": "Ways and Means Education (House)",
+            "body": "House",
+            "startDate": "2026-02-04T15:00:00.000Z",
+            "title": "Ways and Means Education Standing Meeting"
         },
         "HB50": {
             "id": "16180136",
@@ -83,11 +83,11 @@
             "hasPublicHearing": false,
             "sponsor": "Collins",
             "__typename": "AgendaItem",
-            "committee": "Education Policy (Senate)",
-            "title": "Education Policy Standing Meeting",
-            "startDate": "2026-02-04T15:00:00.000Z",
             "location": "Room 320 **TIME & ROOM CHANGE",
-            "body": "Senate"
+            "committee": "Education Policy (Senate)",
+            "body": "Senate",
+            "startDate": "2026-02-04T15:00:00.000Z",
+            "title": "Education Policy Standing Meeting"
         },
         "HB78": {
             "id": "16180137",
@@ -100,11 +100,11 @@
             "hasPublicHearing": false,
             "sponsor": "Ross",
             "__typename": "AgendaItem",
-            "committee": "Education Policy (Senate)",
-            "title": "Education Policy Standing Meeting",
-            "startDate": "2026-02-04T15:00:00.000Z",
             "location": "Room 320 **TIME & ROOM CHANGE",
-            "body": "Senate"
+            "committee": "Education Policy (Senate)",
+            "body": "Senate",
+            "startDate": "2026-02-04T15:00:00.000Z",
+            "title": "Education Policy Standing Meeting"
         },
         "HB19": {
             "id": "16225696",
@@ -117,11 +117,11 @@
             "hasPublicHearing": false,
             "sponsor": "Sellers",
             "__typename": "AgendaItem",
-            "committee": "Children and Senior Advocacy (House)",
-            "title": "Children and Senior Advocacy Standing Meeting",
-            "startDate": "2026-02-04T16:30:00.000Z",
             "location": "Room 617",
-            "body": "House"
+            "committee": "Children and Senior Advocacy (House)",
+            "body": "House",
+            "startDate": "2026-02-04T16:30:00.000Z",
+            "title": "Children and Senior Advocacy Standing Meeting"
         },
         "HB8": {
             "id": "16232764",
@@ -134,11 +134,11 @@
             "hasPublicHearing": false,
             "sponsor": "Gidley",
             "__typename": "AgendaItem",
-            "committee": "Education Policy (House)",
-            "title": "Education Policy Standing Meeting",
-            "startDate": "2026-02-04T19:30:00.000Z",
             "location": "Room 206",
-            "body": "House"
+            "committee": "Education Policy (House)",
+            "body": "House",
+            "startDate": "2026-02-04T19:30:00.000Z",
+            "title": "Education Policy Standing Meeting"
         },
         "HB54": {
             "id": "16177321",
@@ -151,11 +151,11 @@
             "hasPublicHearing": false,
             "sponsor": "Hollis",
             "__typename": "AgendaItem",
-            "committee": "Judiciary (House)",
-            "title": "Judiciary Standing Meeting",
-            "startDate": "2026-02-04T19:30:00.000Z",
             "location": "Room 200",
-            "body": "House"
+            "committee": "Judiciary (House)",
+            "body": "House",
+            "startDate": "2026-02-04T19:30:00.000Z",
+            "title": "Judiciary Standing Meeting"
         },
         "HB9": {
             "id": "16177322",
@@ -168,11 +168,11 @@
             "hasPublicHearing": false,
             "sponsor": "Gidley",
             "__typename": "AgendaItem",
-            "committee": "Judiciary (House)",
-            "title": "Judiciary Standing Meeting",
-            "startDate": "2026-02-04T19:30:00.000Z",
             "location": "Room 200",
-            "body": "House"
+            "committee": "Judiciary (House)",
+            "body": "House",
+            "startDate": "2026-02-04T19:30:00.000Z",
+            "title": "Judiciary Standing Meeting"
         },
         "SB8": {
             "id": "16223678",
@@ -185,11 +185,11 @@
             "hasPublicHearing": false,
             "sponsor": "Allen",
             "__typename": "AgendaItem",
-            "committee": "State Government (House)",
-            "title": "State Government Standing Meeting",
-            "startDate": "2026-02-04T21:00:00.000Z",
             "location": "Room 206",
-            "body": "House"
+            "committee": "State Government (House)",
+            "body": "House",
+            "startDate": "2026-02-04T21:00:00.000Z",
+            "title": "State Government Standing Meeting"
         },
         "SB22": {
             "id": "16223679",
@@ -202,11 +202,11 @@
             "hasPublicHearing": false,
             "sponsor": "Givhan",
             "__typename": "AgendaItem",
-            "committee": "State Government (House)",
-            "title": "State Government Standing Meeting",
-            "startDate": "2026-02-04T21:00:00.000Z",
             "location": "Room 206",
-            "body": "House"
+            "committee": "State Government (House)",
+            "body": "House",
+            "startDate": "2026-02-04T21:00:00.000Z",
+            "title": "State Government Standing Meeting"
         },
         "HB81": {
             "id": "16223685",
@@ -219,11 +219,11 @@
             "hasPublicHearing": false,
             "sponsor": "Gidley",
             "__typename": "AgendaItem",
-            "committee": "State Government (House)",
-            "title": "State Government Standing Meeting",
-            "startDate": "2026-02-04T21:00:00.000Z",
             "location": "Room 206",
-            "body": "House"
+            "committee": "State Government (House)",
+            "body": "House",
+            "startDate": "2026-02-04T21:00:00.000Z",
+            "title": "State Government Standing Meeting"
         }
     }
 }

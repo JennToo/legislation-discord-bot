@@ -85,6 +85,7 @@ async def check_for_updates(client):
             )
             return
 
+        has_changes = False
         for server in config["servers"]:
             if not server["enabled"]:
                 continue
@@ -92,9 +93,12 @@ async def check_for_updates(client):
                 continue
             old_server_meetings = old_meetings.get(server["server_id"], {})
             new_server_meetings = await bills.get_meetings_by_bill(new_meetings, server)
+            bill_messages = bills.render_all_bills(old_bills, new_bills, server)
+            if len(bill_messages) > 0:
+                has_changes = True
             for message in bills.render_all_meetings(
                 old_server_meetings, new_server_meetings, server
-            ) + bills.render_all_bills(old_bills, new_bills, server):
+            ) + bill_messages:
                 logger.info("New message for server %s: %s", server["server_name"], message)
                 channel = client.get_channel(int(server["channel_id"]))
                 await channel.send(message[:1950])
@@ -103,6 +107,12 @@ async def check_for_updates(client):
             old_meetings[server["server_id"]] = new_server_meetings
 
         bills.save_meeting_database(old_meetings)
+
+        if "POSTER" in os.environ and has_changes:
+            logger.info("POSTing bills")
+            async with session.post(os.environ["POSTER"], json=new_bills) as result:
+                result.raise_for_status()
+
     logger.info("Check done")
 
 
