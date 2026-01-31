@@ -32,7 +32,11 @@
                 "SB26",
                 "SB27",
                 "HB14",
-                "HB127"
+                "HB127",
+                "SB183",
+                "SB209",
+                "SB211",
+                "HB168"
             ],
             "enabled": true,
             "motd": 1
@@ -44,7 +48,8 @@
             "bills-of-interest": [
                 "HB23",
                 "HB105",
-                "SB26"
+                "SB26",
+                "SB209"
             ],
             "enabled": true,
             "motd": 1
@@ -54,9 +59,6 @@
             "server_id": "1337181721719734314",
             "server_name": "HBF",
             "bills-of-interest": [
-                "HB1",
-                "HB2",
-                "HB3",
                 "HB4",
                 "HB5",
                 "HB6",
